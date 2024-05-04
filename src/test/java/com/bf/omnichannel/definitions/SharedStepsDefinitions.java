@@ -13,7 +13,7 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.definitions;
 
-import com.bf.omnichannel.tasks.HomeTasks;
+import com.bf.omnichannel.tasks.salesforce.LoginTasks;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -34,8 +34,8 @@ public class SharedStepsDefinitions {
         OnStage.drawTheCurtain(); // This will remove the actor from the stage
     }
 
-    @Given("{actor} is on the home page")
+    @Given("{actor} is logged in to Salesforce")
     public void theActorIsInTheHomePage(@NotNull Actor actor) {
-        actor.wasAbleTo(HomeTasks.openHomePage());
+        actor.wasAbleTo(LoginTasks.openHomePage(), LoginTasks.login());
     }
 }
