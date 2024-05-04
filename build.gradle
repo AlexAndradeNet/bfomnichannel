@@ -1,0 +1,150 @@
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+    id 'org.sonarqube' version '5.0.0.4638'
+    id 'net.serenity-bdd.serenity-gradle-plugin' version '4.1.10'
+    id 'com.diffplug.spotless' version '6.25.0'
+    id 'org.gradle.test-retry' version '1.5.9'
+}
+
+//defaultTasks 'clean', 'test', 'aggregate'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+ext {
+    versions = [
+            serenityCore : '4.1.10',
+            cucumber     : '7.17.0',
+            junit        : '5.10.2',
+            junitPlatform: '1.10.2',
+            aeonbits     : '1.0.12',
+            gson         : '2.10.1',
+            slf4j        : '2.0.13'
+    ]
+}
+
+dependencies {
+    implementation "org.aeonbits.owner:owner:${versions.aeonbits}"
+    testImplementation "org.slf4j:slf4j-api:${versions.slf4j}",
+            "org.slf4j:slf4j-simple:${versions.slf4j}",
+            "com.google.code.gson:gson:${versions.gson}",
+            "net.serenity-bdd:serenity-core:${versions.serenityCore}",
+            "net.serenity-bdd:serenity-ensure:${versions.serenityCore}",
+            "net.serenity-bdd:serenity-screenplay:${versions.serenityCore}",
+            "net.serenity-bdd:serenity-screenplay-webdriver:${versions.serenityCore}",
+            "net.serenity-bdd:serenity-cucumber:${versions.serenityCore}",
+            "org.junit.jupiter:junit-jupiter-api:${versions.junit}",
+            "org.junit.platform:junit-platform-suite:${versions.junitPlatform}",
+            "io.cucumber:cucumber-java:${versions.cucumber}",
+            "io.cucumber:cucumber-junit-platform-engine:${versions.cucumber}"
+
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${versions.junit}"
+}
+
+serenity {
+    generateOutcomes = true     // generate report
+}
+
+spotless {
+    encoding 'UTF-8'
+    // Set the encoding, replace 'UTF-8' with `${encoding}` if it's dynamically defined
+
+    java {
+        targetExclude('/target/**/*', 'build/**/*') // Exclude specific folder
+
+        // Apply Google Java Format with a specific style and options
+        googleJavaFormat('1.22.0').aosp().reflowLongStrings(true)
+
+        // License header configuration
+        licenseHeaderFile 'LICENSE', 'package '
+    }
+
+    groovyGradle {
+        target '*.gradle', 'gradle/*.gradle'
+    }
+
+    format 'dotfiles', {
+        target '.gitignore', '.gitattributes', '.editorconfig'
+        indentWithSpaces(2)
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+
+    // Format SQL files
+    sql {
+        target '**/*.sql' // Define which files to include
+        targetExclude('/target/**/*', 'build/**/*') // Exclude specific folder
+        dbeaver()         // Apply DBeaver formatting conventions
+    }
+
+    // Format JSON files
+    json {
+        target '**/*.json'
+        targetExclude('/target/**/*', 'build/**/*') // Exclude specific folder
+        gson() // Apply Gson-based formatting
+    }
+}
+
+test {
+    testLogging {
+        showStandardStreams = true
+        //events "passed", "skipped", "failed"
+    }
+    systemProperties System.getProperties()
+    useJUnitPlatform()
+    retry {
+        maxRetries = 0 // Disables test retries
+    }
+    finalizedBy 'aggregate'
+    finalizedBy 'spotlessApply'
+}
+
+tasks.withType(Test) {
+    //maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    maxParallelForks = Runtime.runtime.availableProcessors()
+    forkEvery = 1 // This can help with managing test isolation
+}
+
+gradle.startParameter.continueOnFailure = true
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+}
+
+// Tasks for checking and applying formats
+tasks.named('spotlessApply') {
+    group = 'formatting'
+}
+
+tasks.named('spotlessCheck') {
+    group = 'verification'
+}
+
+sonar {
+    properties {
+        property "sonar.coverage.exclusions", "src/**/*.java"
+        property "sonar.sources", "src"
+        property "sonar.test.exclusions", "src/test/**/*.java"
+    }
+}
+
+tasks.register('installLocalGitHook', Copy) {
+    from new File(rootProject.rootDir, 'scripts/pre-commit')
+    into { new File(rootProject.rootDir, '.git/hooks') }
+    fileMode 0775
+}
+
+build.dependsOn installLocalGitHook
