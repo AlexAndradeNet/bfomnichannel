@@ -27,10 +27,21 @@ public class SfDashboardPage extends PageObject {
         super();
     }
 
-    public static final Target BUTTON_SEARCH =
+    public static final Target MENU_MORE = Target.the("menu more").locatedBy("//a/span[.='More']");
+
+    public static final Target MENU_BY_TEXT =
+            Target.the("menu {0}").locatedBy("//one-app-nav-bar-menu-item[.='{0}']");
+
+    public static final Target SEARCH_BUTTON =
             Target.the("button seachbox").locatedBy("//button[.='Search...']");
 
+    public static final Target SEARCH_TEXTBOX =
+            Target.the("textbox seach").locatedBy("//input[@placeholder='Search...']");
+
+    public static final Target FOUND_TERM_LINK =
+            Target.the("link found term {0}").locatedBy("//a[text()='{0}']");
+
     public static void waitUntilPageIsLoaded() {
-        WaitUntil.the(BUTTON_SEARCH, isClickable());
+        WaitUntil.the(SEARCH_BUTTON, isClickable());
     }
 }
