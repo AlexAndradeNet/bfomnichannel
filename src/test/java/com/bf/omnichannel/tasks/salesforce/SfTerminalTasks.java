@@ -125,16 +125,16 @@ public class SfTerminalTasks {
         }
 
         theActor.attemptsTo(
-                /*Ensure.that(
-                        Text.of(SfTerminalPage.VALUE_TABLE_ITEM.of("Status"))
-                                .answeredBy(theActor))
-                .isNotEmpty(),*/
+                Ensure.that(
+                                Text.of(SfTerminalPage.VALUE_TABLE_ITEM.of("Status"))
+                                        .answeredBy(theActor))
+                        .isNotEmpty(),
                 Ensure.that(
                                 Text.of(SfTerminalPage.VALUE_TABLE_ITEM.of("Serial Number"))
                                         .answeredBy(theActor))
                         .isNotEmpty(),
                 Ensure.that(
-                                Text.of(SfTerminalPage.VALUE_TABLE_ITEM.of("Tango ID"))
+                                Text.of(SfTerminalPage.VALUE_TABLE_ITEM.of("Tango TID"))
                                         .answeredBy(theActor))
                         .isNotEmpty(),
                 RememberInfo.forTarget(

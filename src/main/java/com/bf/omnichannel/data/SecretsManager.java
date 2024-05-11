@@ -14,10 +14,13 @@ from Nuvei Inc.
 package com.bf.omnichannel.data;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
+@Getter
 public class SecretsManager {
 
+    @Getter private static final SecretsManager instance = new SecretsManager();
     private final String salesForceUsername;
     private final String salesForcePassword;
     private final String vhqUsername;
@@ -33,14 +36,6 @@ public class SecretsManager {
         vhqPassword = getEnv(dotenv, "SBX_VHQ_PASSWORD");
     }
 
-    private static final class InstanceHolder {
-        private static final SecretsManager instance = new SecretsManager();
-    }
-
-    public static synchronized SecretsManager getInstance() {
-        return InstanceHolder.instance;
-    }
-
     private static String getEnv(Dotenv dotenv, String key) {
         String value = StringUtils.defaultIfBlank(System.getProperty(key), dotenv.get(key));
 
@@ -52,21 +47,5 @@ public class SecretsManager {
         }
 
         return value;
-    }
-
-    public String getSalesForceUsername() {
-        return salesForceUsername;
-    }
-
-    public String getSalesForcePassword() {
-        return salesForcePassword;
-    }
-
-    public String getVhqUsername() {
-        return vhqUsername;
-    }
-
-    public String getVhqPassword() {
-        return vhqPassword;
     }
 }
