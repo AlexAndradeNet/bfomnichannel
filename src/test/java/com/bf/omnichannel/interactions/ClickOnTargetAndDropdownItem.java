@@ -17,6 +17,7 @@ import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
+import net.serenitybdd.screenplay.questions.Attribute;
 import net.serenitybdd.screenplay.targets.Target;
 
 public class ClickOnTargetAndDropdownItem implements Interaction {
@@ -35,11 +36,19 @@ public class ClickOnTargetAndDropdownItem implements Interaction {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        final Target DROPDOWN_ITEM =
-                Target.the("dropdown for '{0}'")
-                        .locatedBy("//lightning-base-combobox-item[.='{0}']");
+        final Target dropdownItem =
+                Target.the("dropdown for '{1}'")
+                        .locatedBy(
+                                "//lightning-base-combobox-item[contains(@id, '{0}') and .='{1}']");
+
+        String comboId = Attribute.of(target).named("id").answeredBy(actor);
+        String[] comboIdPart = comboId.split("-");
+        String dropdownItemIDPart = comboIdPart[comboIdPart.length - 1];
 
         actor.attemptsTo(
-                ClickOn.target(target), ClickOn.target(DROPDOWN_ITEM.of(dropdownItemText)));
+                ClickOn.target(target)
+                        .then(
+                                ClickOn.target(
+                                        dropdownItem.of(dropdownItemIDPart, dropdownItemText))));
     }
 }

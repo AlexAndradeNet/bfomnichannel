@@ -13,16 +13,14 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.tasks.salesforce;
 
-import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
-
 import com.bf.omnichannel.interactions.*;
 import com.bf.omnichannel.ui.salesforce.SfDashboardPage;
 import net.serenitybdd.annotations.Step;
+import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.actions.Scroll;
-import net.serenitybdd.screenplay.waits.WaitUntil;
 import org.openqa.selenium.Keys;
 
 public class SfDashboardTasks {
@@ -32,22 +30,23 @@ public class SfDashboardTasks {
     }
 
     @Step("{0} opens Terminals page by menu")
-    public static Performable openTerminalsPage() {
-        return openPageByMenu("Terminals");
+    public static Performable openTerminalsPage(Actor theActor) {
+        return openPageByMenu(theActor, "Terminals");
     }
 
     @Step("{0} opens Cases page by menu")
-    public static Performable openCasesPage() {
-        return openPageByMenu("Cases");
+    public static Performable openCasesPage(Actor theActor) {
+        return openPageByMenu(theActor, "Cases");
     }
 
-    public static Performable openPageByMenu(String menuOption) {
-        return Task.where(
+    public static Performable openPageByMenu(Actor theActor, String menuOption) {
+        theActor.attemptsTo(
                 ClickOn.target(SfDashboardPage.MENU_MORE),
-                WaitUntil.the(SfDashboardPage.MENU_BY_TEXT.of(menuOption), isClickable()),
+                // WaitUntil.the(SfDashboardPage.MENU_BY_TEXT.of(menuOption), isClickable()),
                 Scroll.to(SfDashboardPage.MENU_BY_TEXT.of(menuOption)),
                 ClickOn.target(SfDashboardPage.MENU_BY_TEXT.of(menuOption)),
                 WaitForPageLoad.complete());
+        return Task.where();
     }
 
     @Step("{0} Search the location {1}")

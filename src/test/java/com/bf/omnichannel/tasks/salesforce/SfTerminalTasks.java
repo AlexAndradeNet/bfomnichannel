@@ -22,6 +22,7 @@ import com.bf.omnichannel.interactions.RemoveElement;
 import com.bf.omnichannel.interactions.WaitForPageLoad;
 import com.bf.omnichannel.ui.salesforce.SfTerminalPage;
 import net.serenitybdd.annotations.Step;
+import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Enter;
@@ -36,8 +37,13 @@ public class SfTerminalTasks {
     }
 
     @Step("{0} adds a new terminal on location '{1}'")
-    public static Performable addNewTerminal(@NotNull String desiredLocation) {
-        return Task.where(
+    public static Performable addNewTerminal(
+            @NotNull Actor theActor,
+            @NotNull String desiredLocation,
+            @NotNull String defaultTerminalSettings,
+            @NotNull String tipAtTimeOfSale) {
+
+        theActor.attemptsTo(
                 ClickOn.target(SfTerminalPage.BUTTON_NEW_TERMINAL),
                 WaitForPageLoad.complete(),
                 WaitUntil.the(SfTerminalPage.LOCATION_TEXTBOX, isClickable()),
@@ -54,16 +60,20 @@ public class SfTerminalTasks {
                 ClickOnTargetAndDropdownItem.thenSelect(
                         SfTerminalPage.COMBOBOX_PURCHASE_OR_RENTAL, "Purchase from Nuvei"),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_DEFAULT_TERMINAL_SETTINGS,
-                        "RETAIL with Tip Set-up"),
+                        SfTerminalPage.COMBOBOX_DEFAULT_TERMINAL_SETTINGS, defaultTerminalSettings),
                 ClickOnTargetAndDropdownItem.thenSelect(
                         SfTerminalPage.COMBOBOX_TERMINAL_AUTO_BATCH, "Yes"),
                 Scroll.to(SfTerminalPage.COMBOBOX_AUTO_BATCH_TIME),
                 ClickOnTargetAndDropdownItem.thenSelect(
                         SfTerminalPage.COMBOBOX_AUTO_BATCH_TIME, "23:00"),
+                ClickOnTargetAndDropdownItem.thenSelect(
+                        SfTerminalPage.COMBOBOX_TERMINAL_TYPE, "Standalone"),
+                ClickOnTargetAndDropdownItem.thenSelect(
+                        SfTerminalPage.COMBOBOX_TIP_AT_TIME_OF_SALE, tipAtTimeOfSale),
                 ClickOn.target(SfTerminalPage.BUTTON_SAVE),
                 WaitForPageLoad.complete(),
                 RemoveElement.byTarget(SfTerminalPage.ALERT_DIALOG),
                 WaitUntil.the(SfTerminalPage.CREATED_TERMINAL_ID_LABEL, isVisible()));
+        return Task.where();
     }
 }

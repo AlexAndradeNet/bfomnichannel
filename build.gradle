@@ -24,30 +24,39 @@ ext {
     versions = [
             serenityCore : '4.1.10',
             cucumber     : '7.17.0',
-            junit        : '5.10.2',
-            junitPlatform: '1.10.2',
+            junit        : '5.11.0-M1',
+            junitPlatform: '1.11.0-M1',
             aeonbits     : '1.0.12',
             gson         : '2.10.1',
             slf4j        : '2.0.13'
     ]
 }
 
+configurations {
+    configureEach {
+        exclude group: 'org.junit', module: 'junit'
+    }
+}
+
 dependencies {
     implementation "org.aeonbits.owner:owner:${versions.aeonbits}",
             'org.apache.commons:commons-lang3:3.14.0',
-            'io.github.cdimascio:dotenv-java:3.0.0'
+            'io.github.cdimascio:dotenv-java:3.0.0',
+            "org.slf4j:slf4j-simple:${versions.slf4j}"
     testImplementation "org.slf4j:slf4j-api:${versions.slf4j}",
-            "org.slf4j:slf4j-simple:${versions.slf4j}",
             "com.google.code.gson:gson:${versions.gson}",
             "net.serenity-bdd:serenity-core:${versions.serenityCore}",
             "net.serenity-bdd:serenity-ensure:${versions.serenityCore}",
             "net.serenity-bdd:serenity-screenplay:${versions.serenityCore}",
             "net.serenity-bdd:serenity-screenplay-webdriver:${versions.serenityCore}",
             "net.serenity-bdd:serenity-cucumber:${versions.serenityCore}",
+            "net.serenity-bdd:serenity-junit:${versions.serenityCore}",
             "org.junit.jupiter:junit-jupiter-api:${versions.junit}",
             "org.junit.platform:junit-platform-suite:${versions.junitPlatform}",
+            "org.junit.platform:junit-platform-launcher:${versions.junitPlatform}",
             "io.cucumber:cucumber-java:${versions.cucumber}",
-            "io.cucumber:cucumber-junit-platform-engine:${versions.cucumber}"
+            "io.cucumber:cucumber-junit-platform-engine:${versions.cucumber}",
+            'org.assertj:assertj-core:3.25.3'
 
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${versions.junit}"
 }

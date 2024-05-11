@@ -35,7 +35,8 @@ public class SharedStepsDefinitions {
     }
 
     @Given("{actor} is logged in to Salesforce")
-    public void theActorIsInTheHomePage(@NotNull Actor actor) {
-        actor.wasAbleTo(SfLoginTasks.openHomePage(), SfLoginTasks.login());
+    public void theActorIsInTheHomePage(@NotNull Actor theActor) {
+        // theActor.wasAbleTo(SfLoginTasks.openHomePage(theActor), SfLoginTasks.login(theActor));
+        theActor.wasAbleTo(SfLoginTasks.openHomePage(theActor));
     }
 }

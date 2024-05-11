@@ -18,13 +18,19 @@ import org.apache.commons.lang3.StringUtils;
 
 public class SecretsManager {
 
-    private final String username;
-    private final String password;
+    private final String salesForceUsername;
+    private final String salesForcePassword;
+    private final String vhqUsername;
+    private final String vhqPassword;
 
     private SecretsManager() {
         Dotenv dotenv = Dotenv.configure().load();
-        username = getEnv(dotenv, "SBX_SALESFORCE_USERNAME");
-        password = getEnv(dotenv, "SBX_SALESFORCE_PASSWORD");
+
+        salesForceUsername = getEnv(dotenv, "SBX_SALESFORCE_USERNAME");
+        salesForcePassword = getEnv(dotenv, "SBX_SALESFORCE_PASSWORD");
+
+        vhqUsername = getEnv(dotenv, "SBX_VHQ_USERNAME");
+        vhqPassword = getEnv(dotenv, "SBX_VHQ_PASSWORD");
     }
 
     private static final class InstanceHolder {
@@ -48,11 +54,19 @@ public class SecretsManager {
         return value;
     }
 
-    public String getUsername() {
-        return username;
+    public String getSalesForceUsername() {
+        return salesForceUsername;
     }
 
-    public String getPassword() {
-        return password;
+    public String getSalesForcePassword() {
+        return salesForcePassword;
+    }
+
+    public String getVhqUsername() {
+        return vhqUsername;
+    }
+
+    public String getVhqPassword() {
+        return vhqPassword;
     }
 }

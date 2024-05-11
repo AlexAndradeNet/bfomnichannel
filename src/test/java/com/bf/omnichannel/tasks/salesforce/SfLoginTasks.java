@@ -20,11 +20,13 @@ import com.bf.omnichannel.interactions.*;
 import com.bf.omnichannel.ui.salesforce.SfDashboardPage;
 import com.bf.omnichannel.ui.salesforce.SfLoginPage;
 import net.serenitybdd.annotations.Step;
+import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.actions.Open;
 import net.serenitybdd.screenplay.waits.WaitUntil;
+import org.jetbrains.annotations.NotNull;
 
 public class SfLoginTasks {
 
@@ -33,23 +35,23 @@ public class SfLoginTasks {
     }
 
     @Step("{0} open the main page")
-    public static Performable openHomePage() {
-        return Task.where(
-                "{0} opens the home page",
-                Open.browserOn().the(SfLoginPage.class), WaitForPageLoad.complete());
+    public static Performable openHomePage(@NotNull Actor theActor) {
+        theActor.attemptsTo(Open.browserOn().the(SfLoginPage.class), WaitForPageLoad.complete());
+        return Task.where("{0} opens the home page");
     }
 
     @Step("{0} enters the username and password")
-    public static Performable login() {
+    public static Performable login(@NotNull Actor theActor) {
         String username = SecretsManager.getInstance().getSalesForceUsername();
         String password = SecretsManager.getInstance().getSalesForcePassword();
 
-        return Task.where(
-                "{0} enters the username and password",
+        theActor.attemptsTo(
                 Enter.theValue(username).into(SfLoginPage.TEXTBOX_USERNAME),
                 Enter.theValue(password).into(SfLoginPage.TEXTBOX_PASSWORD),
                 ClickOn.target(SfLoginPage.BUTTON_LOGIN),
                 WaitForPageLoad.complete(),
                 WaitUntil.the(SfDashboardPage.MENU_MORE, isClickable()));
+
+        return Task.where("{0} enters the username and password");
     }
 }

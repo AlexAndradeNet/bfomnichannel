@@ -39,7 +39,8 @@ public class WaitSpecificTime implements Task {
         try {
             Thread.sleep(NUMBER_OF_MILLISECONDS_TO_WAIT);
         } catch (InterruptedException ignored) {
-            // Ignored
+            // Restore interrupted state...
+            Thread.currentThread().interrupt();
         }
     }
 }
