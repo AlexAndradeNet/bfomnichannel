@@ -11,7 +11,7 @@ Feature: Creating new terminals
 
     #=============================================================================
 
-  #@skip
+  @skip
   #Scenario: Validating Creation of a New Terminal in VHQ
   Scenario Outline: Validating Creation of a New Terminal in VHQ
     Given he created a new terminal for the location "April 19th Location" and Default Terminal Settings to "<Default_Terminal_Settings>" and Tip at Time of Sale "<Tip_at_Time_of_Sale>"
@@ -32,3 +32,28 @@ Feature: Creating new terminals
 #      | MOTO                      | --None--            |
 #      | MOTO                      | Yes                 |
 #      | MOTO                      | No                  |
+
+
+  Scenario: Validating Creation of a New Terminal in VHQ two
+    Given he created a new terminal with the following values
+      | SALESFORCE                           | SF_VALUE                     | EXPECTED_VHQ_VALUE |
+      | Location                             | April 19th Location          | N/A                |
+      | Make and Model                       | Verifone Android Model T650c | T650c              |
+      | Status                               | Submitted                    | N/A                |
+      | Communication Method                 | IP/SSL                       | N/A                |
+      | Charge Equipment Cost incl. Shipping | Partner                      | N/A                |
+      | Purchase or Rental                   | Purchase from Nuvei          | N/A                |
+      | Clerk/Server ID Enablement           | --None--                     | N/A                |
+      | Clerk/Server ID Label                |                              | (**Calculated**)   |
+      | Default Terminal Settings            | RETAIL Set-up                | N/A                |
+      | Ticket Number                        | --None--                     | DISABLED           |
+      | Terminal Auto Batch                  | --None--                     | DISABLED           |
+      | Auto Batch Time                      | 23:00                        | 23:00              |
+      | Table Number                         | --None--                     | DISABLED           |
+      | Cashback                             | --None--                     | DISABLED           |
+      | Merchant Receipt Logo                | --None--                     | DISABLED           |
+      | Alphanumeric Invoice number          | --None--                     | DISABLED           |
+      | Terminal Type                        | Standalone                   | (**Calculated**)   |
+      | Tip at Time of Sale                  | --None--                     | DISABLED           |
+    When he creates a new case for deliver the new terminal
+    Then he should see that the terminal is correctly created in VHQ
