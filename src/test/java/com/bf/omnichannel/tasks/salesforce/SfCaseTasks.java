@@ -77,7 +77,8 @@ public class SfCaseTasks {
                 RemoveElement.byTarget(SfTerminalPage.ALERT_DIALOG),
                 WaitUntil.the(SfCasePage.CREATED_CASE_ID_LABEL, isVisible())
                         .forNoMoreThan(100)
-                        .seconds());
+                        .seconds(),
+                RememberInfo.forTarget(theActor, SfCasePage.CREATED_CASE_ID_LABEL, "sfCaseId"));
 
         return Task.where();
     }

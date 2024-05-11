@@ -13,24 +13,32 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.tasks.salesforce;
 
+import static net.serenitybdd.core.Serenity.getDriver;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
-import com.bf.omnichannel.interactions.ClickOn;
-import com.bf.omnichannel.interactions.ClickOnTargetAndDropdownItem;
-import com.bf.omnichannel.interactions.RemoveElement;
-import com.bf.omnichannel.interactions.WaitForPageLoad;
+import com.bf.omnichannel.interactions.*;
+import com.bf.omnichannel.ui.salesforce.SfDashboardPage;
 import com.bf.omnichannel.ui.salesforce.SfTerminalPage;
+import com.bf.omnichannel.utils.RegexTextExtractor;
+import com.bf.omnichannel.utils.SimpleLogger;
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Enter;
+import net.serenitybdd.screenplay.actions.Open;
 import net.serenitybdd.screenplay.actions.Scroll;
+import net.serenitybdd.screenplay.ensure.Ensure;
+import net.serenitybdd.screenplay.questions.Attribute;
+import net.serenitybdd.screenplay.questions.Text;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 import org.jetbrains.annotations.NotNull;
+import org.openqa.selenium.JavascriptExecutor;
 
 public class SfTerminalTasks {
+
+    private static final SimpleLogger logger = new SimpleLogger(SfTerminalTasks.class);
 
     private SfTerminalTasks() {
         throw new IllegalStateException("Utility class");
@@ -73,7 +81,71 @@ public class SfTerminalTasks {
                 ClickOn.target(SfTerminalPage.BUTTON_SAVE),
                 WaitForPageLoad.complete(),
                 RemoveElement.byTarget(SfTerminalPage.ALERT_DIALOG),
-                WaitUntil.the(SfTerminalPage.CREATED_TERMINAL_ID_LABEL, isVisible()));
+                WaitUntil.the(SfTerminalPage.CREATED_TERMINAL_ID_LABEL, isVisible()),
+                RememberInfo.forTarget(
+                        theActor, SfTerminalPage.CREATED_TERMINAL_ID_LABEL, "sfTerminalId"));
+
+        logger.info(
+                "######### Test Case: defaultTerminalSettings %s, tipAtTimeOfSale %s%n"
+                        .formatted(defaultTerminalSettings, tipAtTimeOfSale));
+
+        return Task.where();
+    }
+
+    @Step("{0} gets the serial number and Tango ID from the new terminal {1}")
+    public static Performable getSerialAndTidFromTheNewTerminal(
+            Actor theActor, String termToSearch) {
+
+        theActor.attemptsTo(SfDashboardTasks.searchByTerm(termToSearch));
+
+        String terminalResultURL =
+                Attribute.of(SfDashboardPage.FOUND_TERM_LINK.of(termToSearch))
+                        .named("href")
+                        .asString()
+                        .answeredBy(theActor);
+
+        String terminalUrlId = RegexTextExtractor.get(terminalResultURL, "r\\/(.*)\\/view");
+
+        String terminalPrintingUrl =
+                "https://safecharge--ongoing.sandbox.my.salesforce.com/%s/p"
+                        .formatted(terminalUrlId);
+
+        theActor.attemptsTo(
+                Open.url(terminalPrintingUrl),
+                WaitForPageLoad.complete(),
+                WaitUntil.the(SfTerminalPage.VALUE_TABLE_ITEM.of("Serial Number"), isVisible())
+                        .forNoMoreThan(100)
+                        .seconds());
+
+        while (Text.of(SfTerminalPage.VALUE_TABLE_ITEM.of("Serial Number"))
+                .answeredBy(theActor)
+                .isEmpty()) {
+            ((JavascriptExecutor) getDriver()).executeScript("window.location.reload(true);");
+            theActor.attemptsTo(WaitForPageLoad.complete(), WaitSpecificTime.forSeconds(30));
+        }
+
+        theActor.attemptsTo(
+                /*Ensure.that(
+                        Text.of(SfTerminalPage.VALUE_TABLE_ITEM.of("Status"))
+                                .answeredBy(theActor))
+                .isNotEmpty(),*/
+                Ensure.that(
+                                Text.of(SfTerminalPage.VALUE_TABLE_ITEM.of("Serial Number"))
+                                        .answeredBy(theActor))
+                        .isNotEmpty(),
+                Ensure.that(
+                                Text.of(SfTerminalPage.VALUE_TABLE_ITEM.of("Tango ID"))
+                                        .answeredBy(theActor))
+                        .isNotEmpty(),
+                RememberInfo.forTarget(
+                        theActor,
+                        SfTerminalPage.VALUE_TABLE_ITEM.of("Serial Number"),
+                        "sfTerminalSerialNumber"),
+                RememberInfo.forTarget(
+                        theActor,
+                        SfTerminalPage.VALUE_TABLE_ITEM.of("Tango TID"),
+                        "sfTerminalTangoTID"));
+
         return Task.where();
     }
 }
