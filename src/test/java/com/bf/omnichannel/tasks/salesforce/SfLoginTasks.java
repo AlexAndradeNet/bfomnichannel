@@ -16,7 +16,8 @@ package com.bf.omnichannel.tasks.salesforce;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
 
 import com.bf.omnichannel.data.SecretsManager;
-import com.bf.omnichannel.interactions.*;
+import com.bf.omnichannel.interactions.ClickOn;
+import com.bf.omnichannel.interactions.WaitForPageLoad;
 import com.bf.omnichannel.ui.salesforce.SfDashboardPage;
 import com.bf.omnichannel.ui.salesforce.SfLoginPage;
 import net.serenitybdd.annotations.Step;

@@ -13,11 +13,12 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.enums.salesforce;
 
-import com.bf.omnichannel.utils.EnumUtils;
+import com.bf.omnichannel.enums.EnumUtils;
+import com.bf.omnichannel.enums.IValuableEnum;
 import lombok.Getter;
 
 @Getter
-public enum SfTerminalTypeEnum {
+public enum SfTerminalTypeEnum implements IValuableEnum {
     NONE("--None--"),
     STANDALONE("Standalone"),
     INTEGRATED("Integrated");

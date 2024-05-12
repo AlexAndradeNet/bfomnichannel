@@ -13,11 +13,12 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.enums.salesforce;
 
-import com.bf.omnichannel.utils.EnumUtils;
+import com.bf.omnichannel.enums.EnumUtils;
+import com.bf.omnichannel.enums.IValuableEnum;
 import lombok.Getter;
 
 @Getter
-public enum SfMakeAndModelEnum {
+public enum SfMakeAndModelEnum implements IValuableEnum {
     NONE("--None--"),
     T650C("Verifone Android Model T650c"),
     T650P("Verifone Android Model T650p");

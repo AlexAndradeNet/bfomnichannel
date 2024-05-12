@@ -13,11 +13,12 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.enums.salesforce;
 
-import com.bf.omnichannel.utils.EnumUtils;
+import com.bf.omnichannel.enums.EnumUtils;
+import com.bf.omnichannel.enums.IValuableEnum;
 import lombok.Getter;
 
 @Getter
-public enum SfYesOrNoEnum {
+public enum SfYesOrNoEnum implements IValuableEnum {
     NONE("--None--"),
     YES("Yes"),
     NO("No"),

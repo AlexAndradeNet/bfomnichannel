@@ -32,6 +32,8 @@ import org.assertj.core.api.SoftAssertions;
 
 public class VhqAppParametersTasks {
 
+    private static final String SELECT_FIELD_TYPE = "SELECT";
+
     private VhqAppParametersTasks() {
         throw new IllegalStateException("Utility class");
     }
@@ -46,18 +48,27 @@ public class VhqAppParametersTasks {
 
         var softAssertions = new SoftAssertions();
 
-        verifySoftAssertions(softAssertions, theActor, "EnablePromptClerkID", "SELECT", "DISABLED");
-        verifySoftAssertions(softAssertions, theActor, "EnableServerID", "SELECT", "DISABLED");
-        verifySoftAssertions(softAssertions, theActor, "EnableTicketNumber", "SELECT", "DISABLED");
-        verifySoftAssertions(softAssertions, theActor, "EnableAutoBatch", "SELECT", "ENABLED");
+        verifySoftAssertions(
+                softAssertions, theActor, "EnableTicketNumber", SELECT_FIELD_TYPE, "DISABLED");
+        verifySoftAssertions(
+                softAssertions, theActor, "EnableAutoBatch", SELECT_FIELD_TYPE, "ENABLED");
         verifySoftAssertions(
                 softAssertions, theActor, "AutomaticSettlementProcessingTime", "TEXTBOX", "23:00");
-        verifySoftAssertions(softAssertions, theActor, "EnableTableNumber", "SELECT", "DISABLED");
-        verifySoftAssertions(softAssertions, theActor, "EnableCashback", "SELECT", "DISABLED");
-        verifySoftAssertions(softAssertions, theActor, "EnableLogo", "SELECT", "DISABLED");
         verifySoftAssertions(
-                softAssertions, theActor, "EnableSemiIntegration", "SELECT", "DISABLED");
-        verifySoftAssertions(softAssertions, theActor, "EnableAcceptTip", "SELECT", "DISABLED");
+                softAssertions, theActor, "EnableTableNumber", SELECT_FIELD_TYPE, "DISABLED");
+        verifySoftAssertions(
+                softAssertions, theActor, "EnableCashback", SELECT_FIELD_TYPE, "DISABLED");
+        verifySoftAssertions(softAssertions, theActor, "EnableLogo", SELECT_FIELD_TYPE, "DISABLED");
+        verifySoftAssertions(
+                softAssertions, theActor, "EnableInvoiceNumber", SELECT_FIELD_TYPE, "DISABLED");
+        verifySoftAssertions(
+                softAssertions, theActor, "EnableAcceptTip", SELECT_FIELD_TYPE, "DISABLED");
+        verifySoftAssertions(
+                softAssertions, theActor, "EnablePromptClerkID", SELECT_FIELD_TYPE, "DISABLED");
+        verifySoftAssertions(
+                softAssertions, theActor, "EnableServerID", SELECT_FIELD_TYPE, "DISABLED");
+        verifySoftAssertions(
+                softAssertions, theActor, "EnableSemiIntegration", SELECT_FIELD_TYPE, "DISABLED");
 
         theActor.attemptsTo(PrintResults.fromRecall(2));
 
@@ -74,7 +85,7 @@ public class VhqAppParametersTasks {
             String expectedValue) {
         Target target = VhqAppParametersPage.SELECT_VALUE.of(fieldName);
 
-        if (!fieldType.equals("SELECT")) {
+        if (!fieldType.equals(SELECT_FIELD_TYPE)) {
             target = VhqAppParametersPage.TEXTBOX_VALUE.of(fieldName);
         }
 

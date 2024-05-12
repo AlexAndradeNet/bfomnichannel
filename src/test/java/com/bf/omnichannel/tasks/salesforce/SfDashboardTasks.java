@@ -13,7 +13,8 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.tasks.salesforce;
 
-import com.bf.omnichannel.interactions.*;
+import com.bf.omnichannel.interactions.ClickOn;
+import com.bf.omnichannel.interactions.WaitForPageLoad;
 import com.bf.omnichannel.ui.salesforce.SfDashboardPage;
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;

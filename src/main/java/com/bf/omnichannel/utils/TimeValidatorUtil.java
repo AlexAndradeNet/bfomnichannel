@@ -13,14 +13,19 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.utils;
 
-import java.util.Arrays;
+import org.apache.commons.lang3.StringUtils;
 
-public class EnumUtils {
+public class TimeValidatorUtil {
 
-    public static <T extends Enum<T>> T fromValue(Class<T> enumClass, String value) {
-        return Arrays.stream(enumClass.getEnumConstants())
-                .filter(v -> v.toString().equals(value))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("unknown value: " + value));
+    private TimeValidatorUtil() {
+        // private constructor to prevent instantiation
+    }
+
+    public static boolean isValid(String time) {
+        if (StringUtils.isEmpty(time)) {
+            return true;
+        }
+        String regex = "^[0-2]\\d:[0-2][05]$";
+        return time.trim().matches(regex);
     }
 }

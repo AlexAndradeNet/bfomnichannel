@@ -6,8 +6,8 @@ Feature: Creating new terminals
   I want to test various basic exercises
   So that I can enhance my practical skills with foundational interactions
 
-  Background: Login on Salesforce
-    Given Abdul is logged in to Salesforce
+  #Background: Login on Salesforce
+    #Given Abdul is logged in to Salesforce
 
     #=============================================================================
 
@@ -35,7 +35,7 @@ Feature: Creating new terminals
 
 
   Scenario: Validating Creation of a New Terminal in VHQ two
-    Given he created a new terminal with the following values
+    Given Alex created a new terminal with the following values
       | SALESFORCE                           | SF_VALUE                     | EXPECTED_VHQ_VALUE |
       | Location                             | April 19th Location          | N/A                |
       | Make and Model                       | Verifone Android Model T650c | T650c              |
@@ -55,5 +55,9 @@ Feature: Creating new terminals
       | Alphanumeric Invoice number          | --None--                     | DISABLED           |
       | Terminal Type                        | Standalone                   | (**Calculated**)   |
       | Tip at Time of Sale                  | --None--                     | DISABLED           |
-    When he creates a new case for deliver the new terminal
-    Then he should see that the terminal is correctly created in VHQ
+    When he creates a new case to deliver the new terminal
+    Then he should see that the terminal is created correctly in VHQ, including the following calculated fields
+      | VHQ_FIELD        | VHQ_VALUE |
+      | Clerk ID         | DISABLED  |
+      | Server ID        | DISABLED  |
+      | Semi-Integration | DISABLED  |

@@ -13,11 +13,12 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.enums.salesforce;
 
-import com.bf.omnichannel.utils.EnumUtils;
+import com.bf.omnichannel.enums.EnumUtils;
+import com.bf.omnichannel.enums.IValuableEnum;
 import lombok.Getter;
 
 @Getter
-public enum SfTerminalFieldsEnum {
+public enum SfTerminalFieldsEnum implements IValuableEnum {
     LOCATION("Location"),
     MAKE_AND_MODEL("Make and Model"),
     STATUS("Status"),

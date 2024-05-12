@@ -18,19 +18,19 @@ import com.bf.omnichannel.enums.IValuableEnum;
 import lombok.Getter;
 
 @Getter
-public enum SfPurchaseOrRentalEnum implements IValuableEnum {
-    NONE("--None--"),
-    PURCHASE("Purchase from Nuvei"),
-    RENT("Rent from Nuvei");
+public enum SfClerkOrServerIDLabelEnum implements IValuableEnum {
+    EMPTY(""),
+    CLERK_ID("Clerk ID"),
+    SERVER_ID("Server ID");
 
     private final String value;
 
-    SfPurchaseOrRentalEnum(String value) {
+    SfClerkOrServerIDLabelEnum(String value) {
         this.value = value;
     }
 
     // Use the helper method from EnumUtils
-    public static SfPurchaseOrRentalEnum fromValue(String s) {
-        return EnumUtils.fromValue(SfPurchaseOrRentalEnum.class, s);
+    public static SfClerkOrServerIDLabelEnum fromValue(String s) {
+        return EnumUtils.fromValue(SfClerkOrServerIDLabelEnum.class, s);
     }
 }

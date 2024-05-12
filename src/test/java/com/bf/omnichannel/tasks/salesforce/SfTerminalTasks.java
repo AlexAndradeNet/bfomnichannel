@@ -113,38 +113,28 @@ public class SfTerminalTasks {
         theActor.attemptsTo(
                 Open.url(terminalPrintingUrl),
                 WaitForPageLoad.complete(),
-                WaitUntil.the(SfTerminalPage.VALUE_TABLE_ITEM.of("Serial Number"), isVisible())
+                WaitUntil.the(SfTerminalPage.VALUE_TABLE_SERIAL_NUMBER, isVisible())
                         .forNoMoreThan(100)
                         .seconds());
 
-        while (Text.of(SfTerminalPage.VALUE_TABLE_ITEM.of("Serial Number"))
-                .answeredBy(theActor)
-                .isEmpty()) {
+        while (Text.of(SfTerminalPage.VALUE_TABLE_SERIAL_NUMBER).answeredBy(theActor).isEmpty()) {
             ((JavascriptExecutor) getDriver()).executeScript("window.location.reload(true);");
             theActor.attemptsTo(WaitForPageLoad.complete(), WaitSpecificTime.forSeconds(30));
         }
 
         theActor.attemptsTo(
-                Ensure.that(
-                                Text.of(SfTerminalPage.VALUE_TABLE_ITEM.of("Status"))
-                                        .answeredBy(theActor))
+                Ensure.that(Text.of(SfTerminalPage.VALUE_TABLE_STATUS).answeredBy(theActor))
                         .isNotEmpty(),
-                Ensure.that(
-                                Text.of(SfTerminalPage.VALUE_TABLE_ITEM.of("Serial Number"))
-                                        .answeredBy(theActor))
+                Ensure.that(Text.of(SfTerminalPage.VALUE_TABLE_SERIAL_NUMBER).answeredBy(theActor))
                         .isNotEmpty(),
-                Ensure.that(
-                                Text.of(SfTerminalPage.VALUE_TABLE_ITEM.of("Tango TID"))
-                                        .answeredBy(theActor))
+                Ensure.that(Text.of(SfTerminalPage.VALUE_TABLE_TANGO_TID).answeredBy(theActor))
                         .isNotEmpty(),
                 RememberInfo.forTarget(
                         theActor,
-                        SfTerminalPage.VALUE_TABLE_ITEM.of("Serial Number"),
+                        SfTerminalPage.VALUE_TABLE_SERIAL_NUMBER,
                         "sfTerminalSerialNumber"),
                 RememberInfo.forTarget(
-                        theActor,
-                        SfTerminalPage.VALUE_TABLE_ITEM.of("Tango TID"),
-                        "sfTerminalTangoTID"));
+                        theActor, SfTerminalPage.VALUE_TABLE_TANGO_TID, "sfTerminalTangoTID"));
 
         return Task.where();
     }

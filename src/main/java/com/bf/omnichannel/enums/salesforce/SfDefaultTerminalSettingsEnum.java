@@ -13,11 +13,12 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.enums.salesforce;
 
-import com.bf.omnichannel.utils.EnumUtils;
+import com.bf.omnichannel.enums.EnumUtils;
+import com.bf.omnichannel.enums.IValuableEnum;
 import lombok.Getter;
 
 @Getter
-public enum SfDefaultTerminalSettingsEnum {
+public enum SfDefaultTerminalSettingsEnum implements IValuableEnum {
     NONE("--None--"),
     RETAIL_SETUP("RETAIL Set-up"),
     RETAIL_WITH_TIP_SETUP("RETAIL with Tip Set-up"),

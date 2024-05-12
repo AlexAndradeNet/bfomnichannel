@@ -116,7 +116,18 @@ public class SfTerminalPage extends PageObject {
 
     // Printing version
 
-    public static final Target VALUE_TABLE_ITEM =
-            Target.the("table value of {0}")
-                    .locatedBy("//td[text()='{0}']/following-sibling::td[1]");
+    private static final String TABLE_ITEM_LOCATOR_TEMPLATE =
+            "//td[text()='%s']/following-sibling::td[1]";
+
+    public static final Target VALUE_TABLE_SERIAL_NUMBER =
+            Target.the("table value of 'Serial Number'")
+                    .locatedBy(TABLE_ITEM_LOCATOR_TEMPLATE.formatted("Serial Number"));
+
+    public static final Target VALUE_TABLE_STATUS =
+            Target.the("table value of 'Status'")
+                    .locatedBy(TABLE_ITEM_LOCATOR_TEMPLATE.formatted("Status"));
+
+    public static final Target VALUE_TABLE_TANGO_TID =
+            Target.the("table value of 'Tango TID'")
+                    .locatedBy(TABLE_ITEM_LOCATOR_TEMPLATE.formatted("Tango TID"));
 }

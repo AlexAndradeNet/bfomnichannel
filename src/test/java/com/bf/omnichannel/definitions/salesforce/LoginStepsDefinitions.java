@@ -14,9 +14,8 @@ from Nuvei Inc.
 package com.bf.omnichannel.definitions.salesforce;
 
 import static com.bf.omnichannel.tasks.salesforce.SfTerminalTasks.getSerialAndTidFromTheNewTerminal;
-import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.*;
 
-import com.bf.omnichannel.interactions.*;
+import com.bf.omnichannel.interactions.PrintResults;
 import com.bf.omnichannel.tasks.salesforce.SfCaseTasks;
 import com.bf.omnichannel.tasks.salesforce.SfDashboardTasks;
 import com.bf.omnichannel.tasks.salesforce.SfTerminalTasks;
