@@ -39,7 +39,9 @@ public class DataTableValidation {
                     "Tip at Time of Sale",
                     "Clerk ID",
                     "Server ID",
-                    "Semi-Integration");
+                    "Semi-Integration",
+                    "RetailPullMode",
+                    "RestaurantPushMode");
 
     private DataTableValidation() {
         // Prevent instantiation

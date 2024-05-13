@@ -88,7 +88,11 @@ public class SfTerminalPage extends PageObject {
                     .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Terminal Auto Batch"));
 
     public static final Target COMBOBOX_AUTO_BATCH_TIME =
-            Target.the("label auto batch time").locatedBy("//input[@name='Auto_Batch_Time__c']");
+            Target.the("combobox auto batch time").locatedBy("//input[@name='Auto_Batch_Time__c']");
+
+    public static final Target COMBOBOX_CASHBACK =
+            Target.the("combobox cashback")
+                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Cashback"));
 
     public static final Target COMBOBOX_ALPHANUMERIC_INVOICE_NUMBER =
             Target.the("combobox alphanumeric invoice number")

@@ -57,7 +57,9 @@ Feature: Creating new terminals
       | Tip at Time of Sale                  | --None--                     | DISABLED           |
     When he creates a new case to deliver the new terminal
     Then he should see that the terminal is created correctly in VHQ, including the following calculated fields
-      | VHQ_FIELD        | VHQ_VALUE |
-      | Clerk ID         | DISABLED  |
-      | Server ID        | DISABLED  |
-      | Semi-Integration | DISABLED  |
+      | VHQ_FIELD          | VHQ_VALUE |
+      | Clerk ID           | DISABLED  |
+      | Server ID          | DISABLED  |
+      | RetailPullMode     | DISABLED  |
+      | RestaurantPushMode | DISABLED  |
+      | Semi-Integration   | DISABLED  |

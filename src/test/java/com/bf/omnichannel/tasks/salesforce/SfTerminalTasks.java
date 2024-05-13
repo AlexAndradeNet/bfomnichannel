@@ -54,7 +54,9 @@ public class SfTerminalTasks {
         theActor.attemptsTo(
                 ClickOn.target(SfTerminalPage.BUTTON_NEW_TERMINAL),
                 WaitForPageLoad.complete(),
-                WaitUntil.the(SfTerminalPage.LOCATION_TEXTBOX, isClickable()),
+                WaitUntil.the(SfTerminalPage.LOCATION_TEXTBOX, isClickable())
+                        .forNoMoreThan(100)
+                        .seconds(),
                 Enter.theValue(desiredLocation).into(SfTerminalPage.LOCATION_TEXTBOX),
                 ClickOn.target(SfTerminalPage.DROPDOWN_ITEM.of(desiredLocation)),
                 ClickOnTargetAndDropdownItem.thenSelect(
@@ -68,12 +70,26 @@ public class SfTerminalTasks {
                 ClickOnTargetAndDropdownItem.thenSelect(
                         SfTerminalPage.COMBOBOX_PURCHASE_OR_RENTAL, "Purchase from Nuvei"),
                 ClickOnTargetAndDropdownItem.thenSelect(
+                        SfTerminalPage.COMBOBOX_CLERK_OR_SERVER_ID_ENABLEMENT, "--None--"),
+                ClickOnTargetAndDropdownItem.thenSelect(
                         SfTerminalPage.COMBOBOX_DEFAULT_TERMINAL_SETTINGS, defaultTerminalSettings),
                 ClickOnTargetAndDropdownItem.thenSelect(
+                        SfTerminalPage.COMBOBOX_CLERK_OR_SERVER_ID_LABEL, "--None--"),
+                ClickOnTargetAndDropdownItem.thenSelect(
                         SfTerminalPage.COMBOBOX_TERMINAL_AUTO_BATCH, "Yes"),
-                Scroll.to(SfTerminalPage.COMBOBOX_AUTO_BATCH_TIME),
+                Scroll.to(SfTerminalPage.COMBOBOX_TICKET_NUMBER),
+                ClickOnTargetAndDropdownItem.thenSelect(
+                        SfTerminalPage.COMBOBOX_TICKET_NUMBER, "--None--"),
                 ClickOnTargetAndDropdownItem.thenSelect(
                         SfTerminalPage.COMBOBOX_AUTO_BATCH_TIME, "23:00"),
+                ClickOnTargetAndDropdownItem.thenSelect(
+                        SfTerminalPage.COMBOBOX_TABLE_NUMBER, "--None--"),
+                ClickOnTargetAndDropdownItem.thenSelect(
+                        SfTerminalPage.COMBOBOX_CASHBACK, "--None--"),
+                ClickOnTargetAndDropdownItem.thenSelect(
+                        SfTerminalPage.COMBOBOX_MERCHANT_RECEIPT_LOGO, "--None--"),
+                ClickOnTargetAndDropdownItem.thenSelect(
+                        SfTerminalPage.COMBOBOX_ALPHANUMERIC_INVOICE_NUMBER, "--None--"),
                 ClickOnTargetAndDropdownItem.thenSelect(
                         SfTerminalPage.COMBOBOX_TERMINAL_TYPE, "Standalone"),
                 ClickOnTargetAndDropdownItem.thenSelect(

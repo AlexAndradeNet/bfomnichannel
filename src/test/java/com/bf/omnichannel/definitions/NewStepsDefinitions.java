@@ -74,15 +74,18 @@ public class NewStepsDefinitions {
                         break;
                     case "Communication Method":
                         scenarioData.setCommunicationMethod(
-                                columns.get(DataTableColumnsEnum.SF_VALUE.getValue()));
+                                SfCommunicationMethodEnum.fromValue(
+                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
                         break;
                     case "Charge Equipment Cost incl. Shipping":
                         scenarioData.setChargeEquipmentCostInclShipping(
-                                columns.get(DataTableColumnsEnum.SF_VALUE.getValue()));
+                                SfChargeEquipmentEnum.fromValue(
+                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
                         break;
                     case "Purchase or Rental":
                         scenarioData.setPurchaseOrRental(
-                                columns.get(DataTableColumnsEnum.SF_VALUE.getValue()));
+                                SfPurchaseOrRentalEnum.fromValue(
+                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
                         break;
                     case "Clerk/Server ID Enablement":
                         scenarioData.setClerkServerIdEnablement(
@@ -201,15 +204,28 @@ public class NewStepsDefinitions {
                 switch (columns.get(DataTableColumnsEnum.VHQ_FIELD.getValue())) {
                     case "Clerk ID":
                         scenarioData.setVhqClerkID(
-                                columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue()));
+                                VhqEnabledOrDisabledEnum.fromValue(
+                                        columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue())));
                         break;
                     case "Server ID":
                         scenarioData.setVhqServerID(
-                                columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue()));
+                                VhqEnabledOrDisabledEnum.fromValue(
+                                        columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue())));
+                        break;
+                    case "RetailPullMode":
+                        scenarioData.setVhqRetailPullMode(
+                                VhqEnabledOrDisabledEnum.fromValue(
+                                        columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue())));
+                        break;
+                    case "RestaurantPushMode":
+                        scenarioData.setVhqRestaurantPushMode(
+                                VhqEnabledOrDisabledEnum.fromValue(
+                                        columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue())));
                         break;
                     case "Semi-Integration":
                         scenarioData.setVhqSemiIntegration(
-                                columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue()));
+                                VhqEnabledOrDisabledEnum.fromValue(
+                                        columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue())));
                         break;
                     default:
                         exceptionForUnexpectedColumn(columns.toString());
@@ -225,8 +241,8 @@ public class NewStepsDefinitions {
                 "Unexpected column name found: '%s'".formatted(columnName));
     }
 
-    @When("he creates a new case to deliver the new terminal")
-    public void heCreatesANewCaseToDeliverTheNewTerminal() {
+    @When("{actor} creates a new case to deliver the new terminal")
+    public void heCreatesANewCaseToDeliverTheNewTerminal(Actor theActor) {
         // TODO: Implement this step
     }
 

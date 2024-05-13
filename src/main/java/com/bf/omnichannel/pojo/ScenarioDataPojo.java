@@ -13,10 +13,8 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.pojo;
 
-import com.bf.omnichannel.enums.salesforce.SfClerkOrServerIDLabelEnum;
-import com.bf.omnichannel.enums.salesforce.SfDefaultTerminalSettingsEnum;
-import com.bf.omnichannel.enums.salesforce.SfTerminalTypeEnum;
-import com.bf.omnichannel.enums.salesforce.SfYesOrNoEnum;
+import com.bf.omnichannel.enums.salesforce.*;
+import com.bf.omnichannel.enums.vhq.VhqEnabledOrDisabledEnum;
 import com.bf.omnichannel.pojo.auxiliar.AutoBatchTimePojo;
 import com.bf.omnichannel.pojo.auxiliar.MakeAndModelPojo;
 import com.bf.omnichannel.pojo.auxiliar.YesNoEnabledDisabledPojo;
@@ -31,9 +29,9 @@ public class ScenarioDataPojo {
     private String location;
     private MakeAndModelPojo makeAndModel;
     private String status;
-    private String communicationMethod;
-    private String chargeEquipmentCostInclShipping;
-    private String purchaseOrRental;
+    private SfCommunicationMethodEnum communicationMethod;
+    private SfChargeEquipmentEnum chargeEquipmentCostInclShipping;
+    private SfPurchaseOrRentalEnum purchaseOrRental;
     private SfYesOrNoEnum clerkServerIdEnablement;
     private SfClerkOrServerIDLabelEnum clerkServerIdLabel;
     private SfDefaultTerminalSettingsEnum defaultTerminalSettings;
@@ -46,7 +44,9 @@ public class ScenarioDataPojo {
     private YesNoEnabledDisabledPojo alphanumericInvoiceNumber;
     private SfTerminalTypeEnum terminalType;
     private YesNoEnabledDisabledPojo tipAtTimeOfSale;
-    private String vhqClerkID;
-    private String vhqServerID;
-    private String vhqSemiIntegration;
+    private VhqEnabledOrDisabledEnum vhqClerkID;
+    private VhqEnabledOrDisabledEnum vhqServerID;
+    private VhqEnabledOrDisabledEnum vhqRetailPullMode;
+    private VhqEnabledOrDisabledEnum vhqRestaurantPushMode;
+    private VhqEnabledOrDisabledEnum vhqSemiIntegration;
 }

@@ -17,6 +17,7 @@ import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClic
 
 import com.bf.omnichannel.interactions.PrintResults;
 import com.bf.omnichannel.ui.vhq.VhqAppParametersPage;
+import com.bf.omnichannel.utils.RegexTextExtractor;
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
@@ -42,33 +43,68 @@ public class VhqAppParametersTasks {
     public static Performable checkAppParameters(Actor theActor) {
         theActor.attemptsTo(
                 Switch.toDefaultContext(),
-                WaitUntil.the(
-                        VhqAppParametersPage.SELECT_VALUE.of("EnablePromptClerkID"),
-                        isClickable()));
+                WaitUntil.the(VhqAppParametersPage.ENABLE_PROMPT_CLERK_ID_SELECT, isClickable())
+                        .forNoMoreThan(100)
+                        .seconds());
 
         var softAssertions = new SoftAssertions();
 
         verifySoftAssertions(
-                softAssertions, theActor, "EnableTicketNumber", SELECT_FIELD_TYPE, "DISABLED");
+                softAssertions,
+                theActor,
+                VhqAppParametersPage.ENABLE_PROMPT_CLERK_ID_SELECT,
+                "DISABLED");
         verifySoftAssertions(
-                softAssertions, theActor, "EnableAutoBatch", SELECT_FIELD_TYPE, "ENABLED");
+                softAssertions,
+                theActor,
+                VhqAppParametersPage.ENABLE_INVOICE_NUMBER_SELECT,
+                "DISABLED");
         verifySoftAssertions(
-                softAssertions, theActor, "AutomaticSettlementProcessingTime", "TEXTBOX", "23:00");
+                softAssertions, theActor, VhqAppParametersPage.ENABLE_SERVER_ID_SELECT, "DISABLED");
         verifySoftAssertions(
-                softAssertions, theActor, "EnableTableNumber", SELECT_FIELD_TYPE, "DISABLED");
+                softAssertions,
+                theActor,
+                VhqAppParametersPage.ENABLE_TABLE_NUMBER_SELECT,
+                "DISABLED");
         verifySoftAssertions(
-                softAssertions, theActor, "EnableCashback", SELECT_FIELD_TYPE, "DISABLED");
-        verifySoftAssertions(softAssertions, theActor, "EnableLogo", SELECT_FIELD_TYPE, "DISABLED");
+                softAssertions,
+                theActor,
+                VhqAppParametersPage.ENABLE_TICKET_NUMBER_SELECT,
+                "DISABLED");
         verifySoftAssertions(
-                softAssertions, theActor, "EnableInvoiceNumber", SELECT_FIELD_TYPE, "DISABLED");
+                softAssertions,
+                theActor,
+                VhqAppParametersPage.AUTOMATIC_SETTLEMENT_PROCESSING_TIME_SELECT,
+                "23:00");
+
+        theActor.attemptsTo(Scroll.to(VhqAppParametersPage.ENABLE_RETAIL_PULL_MODE_SELECT));
+
         verifySoftAssertions(
-                softAssertions, theActor, "EnableAcceptTip", SELECT_FIELD_TYPE, "DISABLED");
+                softAssertions,
+                theActor,
+                VhqAppParametersPage.ENABLE_RETAIL_PULL_MODE_SELECT,
+                "DISABLED");
         verifySoftAssertions(
-                softAssertions, theActor, "EnablePromptClerkID", SELECT_FIELD_TYPE, "DISABLED");
+                softAssertions,
+                theActor,
+                VhqAppParametersPage.ENABLE_RESTAURANT_PUSH_MODE_SELECT,
+                "DISABLED");
         verifySoftAssertions(
-                softAssertions, theActor, "EnableServerID", SELECT_FIELD_TYPE, "DISABLED");
+                softAssertions,
+                theActor,
+                VhqAppParametersPage.ENABLE_SEMI_INTEGRATION_SELECT,
+                "DISABLED");
         verifySoftAssertions(
-                softAssertions, theActor, "EnableSemiIntegration", SELECT_FIELD_TYPE, "DISABLED");
+                softAssertions, theActor, VhqAppParametersPage.ENABLE_CASHBACK_SELECT, "DISABLED");
+        verifySoftAssertions(
+                softAssertions, theActor, VhqAppParametersPage.ENABLE_AUTO_BATCH_SELECT, "ENABLED");
+        verifySoftAssertions(
+                softAssertions, theActor, VhqAppParametersPage.ENABLE_LOGO_SELECT, "DISABLED");
+        verifySoftAssertions(
+                softAssertions,
+                theActor,
+                VhqAppParametersPage.ENABLE_ACCEPT_TIP_SELECT,
+                "DISABLED");
 
         theActor.attemptsTo(PrintResults.fromRecall(2));
 
@@ -78,23 +114,14 @@ public class VhqAppParametersTasks {
     }
 
     private static void verifySoftAssertions(
-            SoftAssertions softAssertions,
-            Actor theActor,
-            String fieldName,
-            String fieldType,
-            String expectedValue) {
-        Target target = VhqAppParametersPage.SELECT_VALUE.of(fieldName);
-
-        if (!fieldType.equals(SELECT_FIELD_TYPE)) {
-            target = VhqAppParametersPage.TEXTBOX_VALUE.of(fieldName);
-        }
-
-        theActor.attemptsTo(Scroll.to(target));
+            SoftAssertions softAssertions, Actor theActor, Target target, String expectedValue) {
 
         String currentValue = Text.of(target).answeredBy(theActor);
         if (StringUtils.isEmpty(currentValue)) {
             currentValue = Attribute.of(target).named("value").answeredBy(theActor);
         }
+
+        String fieldName = RegexTextExtractor.get(target.getName(), "'(.*)'");
 
         softAssertions
                 .assertThat(currentValue)
