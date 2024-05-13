@@ -51,7 +51,9 @@ public class SfLoginTasks {
                 Enter.theValue(password).into(SfLoginPage.TEXTBOX_PASSWORD),
                 ClickOn.target(SfLoginPage.BUTTON_LOGIN),
                 WaitForPageLoad.complete(),
-                WaitUntil.the(SfDashboardPage.MENU_MORE, isClickable()));
+                WaitUntil.the(SfDashboardPage.MENU_MORE, isClickable())
+                        .forNoMoreThan(100)
+                        .seconds());
 
         return Task.where("{0} enters the username and password");
     }

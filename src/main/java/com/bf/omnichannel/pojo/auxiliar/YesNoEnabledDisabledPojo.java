@@ -23,6 +23,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class YesNoEnabledDisabledPojo {
-    private SfYesOrNoEnum salesForceYesOrNoEnum;
+    private SfYesOrNoEnum sFYesOrNoEnum;
     private VhqEnabledOrDisabledEnum vhqEnabledOrDisabledEnum;
 }

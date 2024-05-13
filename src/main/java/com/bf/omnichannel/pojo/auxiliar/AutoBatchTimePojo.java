@@ -16,6 +16,7 @@ package com.bf.omnichannel.pojo.auxiliar;
 import com.bf.omnichannel.utils.TimeValidatorUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 @Getter
 @NoArgsConstructor
@@ -32,6 +33,11 @@ public class AutoBatchTimePojo {
     }
 
     private String validateTime(String autoBatchTime) {
+
+        if (StringUtils.isEmpty(autoBatchTime)) {
+            autoBatchTime = "";
+        }
+
         if (!TimeValidatorUtil.isValid(autoBatchTime)) {
             throw new IllegalArgumentException(
                     "Invalid time format for '"

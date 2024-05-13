@@ -30,7 +30,7 @@ ext {
             junit        : '5.11.0-M1',
             junitPlatform: '1.11.0-M1',
             lombok       : '1.18.32',
-            serenityCore : '4.1.10',
+            serenityCore : '4.1.12',
             slf4j        : '2.0.13'
     ]
 }

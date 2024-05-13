@@ -18,10 +18,10 @@ import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClic
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 import com.bf.omnichannel.interactions.*;
+import com.bf.omnichannel.pojo.ScenarioDataPojo;
 import com.bf.omnichannel.ui.salesforce.SfDashboardPage;
 import com.bf.omnichannel.ui.salesforce.SfTerminalPage;
 import com.bf.omnichannel.utils.RegexTextExtractor;
-import com.bf.omnichannel.utils.SimpleLogger;
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
@@ -38,18 +38,14 @@ import org.openqa.selenium.JavascriptExecutor;
 
 public class SfTerminalTasks {
 
-    private static final SimpleLogger logger = new SimpleLogger(SfTerminalTasks.class);
-
     private SfTerminalTasks() {
         throw new IllegalStateException("Utility class");
     }
 
     @Step("{0} adds a new terminal on location '{1}'")
-    public static Performable addNewTerminal(
-            @NotNull Actor theActor,
-            @NotNull String desiredLocation,
-            @NotNull String defaultTerminalSettings,
-            @NotNull String tipAtTimeOfSale) {
+    public static Performable addNewTerminal(@NotNull Actor theActor) {
+
+        ScenarioDataPojo scenarioData = theActor.recall("scenarioData");
 
         theActor.attemptsTo(
                 ClickOn.target(SfTerminalPage.BUTTON_NEW_TERMINAL),
@@ -57,43 +53,59 @@ public class SfTerminalTasks {
                 WaitUntil.the(SfTerminalPage.LOCATION_TEXTBOX, isClickable())
                         .forNoMoreThan(100)
                         .seconds(),
-                Enter.theValue(desiredLocation).into(SfTerminalPage.LOCATION_TEXTBOX),
-                ClickOn.target(SfTerminalPage.DROPDOWN_ITEM.of(desiredLocation)),
+                Enter.theValue(scenarioData.getLocation()).into(SfTerminalPage.LOCATION_TEXTBOX),
+                ClickOn.target(SfTerminalPage.DROPDOWN_ITEM.of(scenarioData.getLocation())),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_MAKE_AND_MODEL, "Verifone Android Model T650c"),
+                        SfTerminalPage.COMBOBOX_MAKE_AND_MODEL,
+                        scenarioData.getMakeAndModel().getSfMakeAndModelEnum().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_STATUS, "Submitted"),
+                        SfTerminalPage.COMBOBOX_STATUS, scenarioData.getStatus()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_COMMUNICATION_METHOD, "IP/SSL"),
+                        SfTerminalPage.COMBOBOX_COMMUNICATION_METHOD,
+                        scenarioData.getCommunicationMethod().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_CHARGE_EQUIPMENT, "Partner"),
+                        SfTerminalPage.COMBOBOX_CHARGE_EQUIPMENT,
+                        scenarioData.getChargeEquipmentCostInclShipping().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_PURCHASE_OR_RENTAL, "Purchase from Nuvei"),
+                        SfTerminalPage.COMBOBOX_PURCHASE_OR_RENTAL,
+                        scenarioData.getPurchaseOrRental().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_CLERK_OR_SERVER_ID_ENABLEMENT, "--None--"),
+                        SfTerminalPage.COMBOBOX_CLERK_OR_SERVER_ID_ENABLEMENT,
+                        scenarioData.getClerkServerIdEnablement().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_DEFAULT_TERMINAL_SETTINGS, defaultTerminalSettings),
+                        SfTerminalPage.COMBOBOX_DEFAULT_TERMINAL_SETTINGS,
+                        scenarioData.getDefaultTerminalSettings().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_CLERK_OR_SERVER_ID_LABEL, "--None--"),
+                        SfTerminalPage.COMBOBOX_CLERK_OR_SERVER_ID_LABEL,
+                        scenarioData.getClerkServerIdLabel().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_TERMINAL_AUTO_BATCH, "Yes"),
+                        SfTerminalPage.COMBOBOX_TERMINAL_AUTO_BATCH,
+                        scenarioData.getTerminalAutoBatch().getSFYesOrNoEnum().getValue()),
                 Scroll.to(SfTerminalPage.COMBOBOX_TICKET_NUMBER),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_TICKET_NUMBER, "--None--"),
+                        SfTerminalPage.COMBOBOX_TICKET_NUMBER,
+                        scenarioData.getTicketNumber().getSFYesOrNoEnum().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_AUTO_BATCH_TIME, "23:00"),
+                        SfTerminalPage.COMBOBOX_AUTO_BATCH_TIME,
+                        scenarioData.getAutoBatchTime().getSFAutoBatchTime()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_TABLE_NUMBER, "--None--"),
+                        SfTerminalPage.COMBOBOX_TABLE_NUMBER,
+                        scenarioData.getTableNumber().getSFYesOrNoEnum().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_CASHBACK, "--None--"),
+                        SfTerminalPage.COMBOBOX_CASHBACK,
+                        scenarioData.getCashback().getSFYesOrNoEnum().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_MERCHANT_RECEIPT_LOGO, "--None--"),
+                        SfTerminalPage.COMBOBOX_MERCHANT_RECEIPT_LOGO,
+                        scenarioData.getMerchantReceiptLogo().getSFYesOrNoEnum().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_ALPHANUMERIC_INVOICE_NUMBER, "--None--"),
+                        SfTerminalPage.COMBOBOX_ALPHANUMERIC_INVOICE_NUMBER,
+                        scenarioData.getAlphanumericInvoiceNumber().getSFYesOrNoEnum().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_TERMINAL_TYPE, "Standalone"),
+                        SfTerminalPage.COMBOBOX_TERMINAL_TYPE,
+                        scenarioData.getTerminalType().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
-                        SfTerminalPage.COMBOBOX_TIP_AT_TIME_OF_SALE, tipAtTimeOfSale),
+                        SfTerminalPage.COMBOBOX_TIP_AT_TIME_OF_SALE,
+                        scenarioData.getTipAtTimeOfSale().getSFYesOrNoEnum().getValue()),
                 ClickOn.target(SfTerminalPage.BUTTON_SAVE),
                 WaitForPageLoad.complete(),
                 RemoveElement.byTarget(SfTerminalPage.ALERT_DIALOG),
@@ -101,16 +113,13 @@ public class SfTerminalTasks {
                 RememberInfo.forTarget(
                         theActor, SfTerminalPage.CREATED_TERMINAL_ID_LABEL, "sfTerminalId"));
 
-        logger.info(
-                "######### Test Case: defaultTerminalSettings %s, tipAtTimeOfSale %s%n"
-                        .formatted(defaultTerminalSettings, tipAtTimeOfSale));
-
         return Task.where();
     }
 
     @Step("{0} gets the serial number and Tango ID from the new terminal {1}")
-    public static Performable getSerialAndTidFromTheNewTerminal(
-            Actor theActor, String termToSearch) {
+    public static Performable getSerialAndTidFromTheNewTerminal(Actor theActor) {
+
+        String termToSearch = theActor.recall("sfTerminalId");
 
         theActor.attemptsTo(SfDashboardTasks.searchByTerm(termToSearch));
 

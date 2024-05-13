@@ -1,6 +1,6 @@
 #/bin/sh
 
-caffeinate -d
+caffeinate -d &
 ./gradlew clean test --rerun-tasks
 killall caffeinate
 killall chromedriver

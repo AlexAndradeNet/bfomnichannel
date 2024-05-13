@@ -14,9 +14,11 @@ from Nuvei Inc.
 package com.bf.omnichannel.tasks.salesforce;
 
 import static net.serenitybdd.core.Serenity.getDriver;
-import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.*;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isPresent;
 
 import com.bf.omnichannel.interactions.*;
+import com.bf.omnichannel.pojo.ScenarioDataPojo;
 import com.bf.omnichannel.ui.salesforce.SfCasePage;
 import com.bf.omnichannel.ui.salesforce.SfTerminalPage;
 import com.bf.omnichannel.utils.SimpleLogger;
@@ -40,11 +42,9 @@ public class SfCaseTasks {
     }
 
     @Step("{0} add a new terminal {1}")
-    public static Performable addNewCase(
-            @NotNull Actor theActor,
-            @NotNull String companyProfile,
-            @NotNull String location,
-            @NotNull String sfTerminalId) {
+    public static Performable addNewCase(@NotNull Actor theActor) {
+
+        ScenarioDataPojo scenarioData = theActor.recall("scenarioData");
 
         theActor.attemptsTo(
                 WaitUntil.the(SfCasePage.BUTTON_INTEGRATION_GUIDE, isPresent()),
@@ -54,8 +54,9 @@ public class SfCaseTasks {
                 ClickOn.target(SfCasePage.NEXT_BUTTON),
                 WaitForPageLoad.complete(),
                 WaitUntil.the(SfCasePage.COMPANY_PROFILE_TEXTBOX, isClickable()),
-                Enter.theValue(companyProfile).into(SfCasePage.COMPANY_PROFILE_TEXTBOX),
-                ClickOn.target(SfCasePage.DROPDOWN_ITEM.of(companyProfile)),
+                Enter.theValue(scenarioData.getCompanyProfile())
+                        .into(SfCasePage.COMPANY_PROFILE_TEXTBOX),
+                ClickOn.target(SfCasePage.DROPDOWN_ITEM.of(scenarioData.getCompanyProfile())),
                 ClickOnTargetAndDropdownItem.thenSelect(SfCasePage.PROFILE_TYPE_COMBOBOX, "POS"),
                 ClickOnTargetAndDropdownItem.thenSelect(
                         SfCasePage.CASE_REASON_COMBOBOX, "New Merchant"),
@@ -65,9 +66,9 @@ public class SfCaseTasks {
                 Scroll.to(SfCasePage.PROFILE_COMBOBOX),
                 ClickOnTargetAndDropdownItem.thenSelect(
                         SfCasePage.PROFILE_COMBOBOX, "UK Omnichannel Verifone Terminal"),
-                Enter.theValue(location).into(SfCasePage.LOCATION_TEXTBOX),
-                ClickOn.target(SfCasePage.DROPDOWN_ITEM.of(location)),
-                Enter.theValue("Add additional terminal " + sfTerminalId)
+                Enter.theValue(scenarioData.getLocation()).into(SfCasePage.LOCATION_TEXTBOX),
+                ClickOn.target(SfCasePage.DROPDOWN_ITEM.of(scenarioData.getLocation())),
+                Enter.theValue("Add additional terminal " + theActor.recall("sfTerminalId"))
                         .into(SfCasePage.SUBJECT_TEXTBOX),
                 ClickOn.target(SfCasePage.BUTTON_SAVE),
                 WaitForPageLoad.complete(),
@@ -75,10 +76,10 @@ public class SfCaseTasks {
                         .forNoMoreThan(100)
                         .seconds(),
                 RemoveElement.byTarget(SfTerminalPage.ALERT_DIALOG),
-                WaitUntil.the(SfCasePage.CREATED_CASE_ID_LABEL, isVisible())
+                WaitUntil.the(SfCasePage.MORE_OPTIONS_BUTTON, isClickable())
                         .forNoMoreThan(100)
-                        .seconds(),
-                RememberInfo.forTarget(theActor, SfCasePage.CREATED_CASE_ID_LABEL, "sfCaseId"));
+                        .seconds());
+        // RememberInfo.forTarget(theActor, SfCasePage.CREATED_CASE_ID_LABEL, "sfCaseId"));
 
         return Task.where();
     }

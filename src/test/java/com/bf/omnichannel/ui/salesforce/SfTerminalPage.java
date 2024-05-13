@@ -25,7 +25,7 @@ public class SfTerminalPage extends PageObject {
     }
 
     private static final String COMBOBOX_LOCATOR_TEMPLATE =
-            "//button[contains(@id, 'combobox') and contains(@aria-label, '%s')]";
+            "//button[starts-with(@id, 'combobox') and contains(@aria-label, '%s')]";
 
     public static final Target BUTTON_NEW_TERMINAL =
             Target.the("button new terminal").locatedBy("//li[.='New']");
@@ -96,7 +96,7 @@ public class SfTerminalPage extends PageObject {
 
     public static final Target COMBOBOX_ALPHANUMERIC_INVOICE_NUMBER =
             Target.the("combobox alphanumeric invoice number")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Alphanumeric Invoice Number"));
+                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Alphanumeric Invoice number"));
 
     public static final Target COMBOBOX_TIP_AT_TIME_OF_SALE =
             Target.the("combobox tip at time of sale")

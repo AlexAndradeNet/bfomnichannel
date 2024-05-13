@@ -20,6 +20,7 @@ public class DataTableValidation {
     private static final Set<String> EXPECTED_COLUMN_NAMES =
             Set.of(
                     "Location",
+                    "Company Profile",
                     "Make and Model",
                     "Status",
                     "Communication Method",

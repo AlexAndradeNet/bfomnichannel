@@ -27,6 +27,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ScenarioDataPojo {
     private String location;
+    private String companyProfile;
     private MakeAndModelPojo makeAndModel;
     private String status;
     private SfCommunicationMethodEnum communicationMethod;

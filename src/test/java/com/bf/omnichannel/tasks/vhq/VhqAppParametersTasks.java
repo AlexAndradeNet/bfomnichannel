@@ -16,6 +16,7 @@ package com.bf.omnichannel.tasks.vhq;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
 
 import com.bf.omnichannel.interactions.PrintResults;
+import com.bf.omnichannel.pojo.ScenarioDataPojo;
 import com.bf.omnichannel.ui.vhq.VhqAppParametersPage;
 import com.bf.omnichannel.utils.RegexTextExtractor;
 import net.serenitybdd.annotations.Step;
@@ -33,14 +34,15 @@ import org.assertj.core.api.SoftAssertions;
 
 public class VhqAppParametersTasks {
 
-    private static final String SELECT_FIELD_TYPE = "SELECT";
-
     private VhqAppParametersTasks() {
         throw new IllegalStateException("Utility class");
     }
 
     @Step("{0} opens App Parameters and check its content")
     public static Performable checkAppParameters(Actor theActor) {
+
+        ScenarioDataPojo scenarioData = theActor.recall("scenarioData");
+
         theActor.attemptsTo(
                 Switch.toDefaultContext(),
                 WaitUntil.the(VhqAppParametersPage.ENABLE_PROMPT_CLERK_ID_SELECT, isClickable())
@@ -53,29 +55,35 @@ public class VhqAppParametersTasks {
                 softAssertions,
                 theActor,
                 VhqAppParametersPage.ENABLE_PROMPT_CLERK_ID_SELECT,
-                "DISABLED");
+                scenarioData.getVhqClerkID().getValue());
         verifySoftAssertions(
                 softAssertions,
                 theActor,
                 VhqAppParametersPage.ENABLE_INVOICE_NUMBER_SELECT,
-                "DISABLED");
+                scenarioData
+                        .getAlphanumericInvoiceNumber()
+                        .getVhqEnabledOrDisabledEnum()
+                        .getValue());
         verifySoftAssertions(
-                softAssertions, theActor, VhqAppParametersPage.ENABLE_SERVER_ID_SELECT, "DISABLED");
+                softAssertions,
+                theActor,
+                VhqAppParametersPage.ENABLE_SERVER_ID_SELECT,
+                scenarioData.getVhqServerID().getValue());
         verifySoftAssertions(
                 softAssertions,
                 theActor,
                 VhqAppParametersPage.ENABLE_TABLE_NUMBER_SELECT,
-                "DISABLED");
+                scenarioData.getTableNumber().getVhqEnabledOrDisabledEnum().getValue());
         verifySoftAssertions(
                 softAssertions,
                 theActor,
                 VhqAppParametersPage.ENABLE_TICKET_NUMBER_SELECT,
-                "DISABLED");
+                scenarioData.getTicketNumber().getVhqEnabledOrDisabledEnum().getValue());
         verifySoftAssertions(
                 softAssertions,
                 theActor,
                 VhqAppParametersPage.AUTOMATIC_SETTLEMENT_PROCESSING_TIME_SELECT,
-                "23:00");
+                scenarioData.getAutoBatchTime().getVhqAutoBatchTime());
 
         theActor.attemptsTo(Scroll.to(VhqAppParametersPage.ENABLE_RETAIL_PULL_MODE_SELECT));
 
@@ -83,28 +91,37 @@ public class VhqAppParametersTasks {
                 softAssertions,
                 theActor,
                 VhqAppParametersPage.ENABLE_RETAIL_PULL_MODE_SELECT,
-                "DISABLED");
+                scenarioData.getVhqRetailPullMode().getValue());
         verifySoftAssertions(
                 softAssertions,
                 theActor,
                 VhqAppParametersPage.ENABLE_RESTAURANT_PUSH_MODE_SELECT,
-                "DISABLED");
+                scenarioData.getVhqRestaurantPushMode().getValue());
         verifySoftAssertions(
                 softAssertions,
                 theActor,
                 VhqAppParametersPage.ENABLE_SEMI_INTEGRATION_SELECT,
-                "DISABLED");
+                scenarioData.getVhqSemiIntegration().getValue());
         verifySoftAssertions(
-                softAssertions, theActor, VhqAppParametersPage.ENABLE_CASHBACK_SELECT, "DISABLED");
+                softAssertions,
+                theActor,
+                VhqAppParametersPage.ENABLE_CASHBACK_SELECT,
+                scenarioData.getCashback().getVhqEnabledOrDisabledEnum().getValue());
         verifySoftAssertions(
-                softAssertions, theActor, VhqAppParametersPage.ENABLE_AUTO_BATCH_SELECT, "ENABLED");
+                softAssertions,
+                theActor,
+                VhqAppParametersPage.ENABLE_AUTO_BATCH_SELECT,
+                scenarioData.getTerminalAutoBatch().getVhqEnabledOrDisabledEnum().getValue());
         verifySoftAssertions(
-                softAssertions, theActor, VhqAppParametersPage.ENABLE_LOGO_SELECT, "DISABLED");
+                softAssertions,
+                theActor,
+                VhqAppParametersPage.ENABLE_LOGO_SELECT,
+                scenarioData.getMerchantReceiptLogo().getVhqEnabledOrDisabledEnum().getValue());
         verifySoftAssertions(
                 softAssertions,
                 theActor,
                 VhqAppParametersPage.ENABLE_ACCEPT_TIP_SELECT,
-                "DISABLED");
+                scenarioData.getTipAtTimeOfSale().getVhqEnabledOrDisabledEnum().getValue());
 
         theActor.attemptsTo(PrintResults.fromRecall(2));
 
