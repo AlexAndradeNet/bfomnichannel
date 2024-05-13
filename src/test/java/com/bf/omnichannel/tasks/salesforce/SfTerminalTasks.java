@@ -105,7 +105,7 @@ public class SfTerminalTasks {
                         scenarioData.getTerminalType().getValue()),
                 ClickOnTargetAndDropdownItem.thenSelect(
                         SfTerminalPage.COMBOBOX_TIP_AT_TIME_OF_SALE,
-                        scenarioData.getTipAtTimeOfSale().getSFYesOrNoEnum().getValue()),
+                        scenarioData.getTipAtTimeOfSale().getValue()),
                 ClickOn.target(SfTerminalPage.BUTTON_SAVE),
                 WaitForPageLoad.complete(),
                 RemoveElement.byTarget(SfTerminalPage.ALERT_DIALOG),

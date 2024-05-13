@@ -47,7 +47,12 @@ public class PrintResults implements Interaction {
         }
 
         actor.recallAll()
-                .forEach((key, value) -> result.append(reportFormat.formatted(key, value)));
+                .forEach(
+                        (key, value) -> {
+                            if (!key.equals("scenarioData")) {
+                                result.append(reportFormat.formatted(key, value));
+                            }
+                        });
         logger.info(String.valueOf(result));
 
         try {

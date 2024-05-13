@@ -13,6 +13,7 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.enums;
 
+import com.bf.omnichannel.exceptions.UnknownEnumValueException;
 import java.util.Arrays;
 
 public class EnumUtils {
@@ -26,12 +27,6 @@ public class EnumUtils {
         return Arrays.stream(enumClass.getEnumConstants())
                 .filter(e -> e.getValue().equals(value))
                 .findFirst()
-                .orElseThrow(
-                        () ->
-                                new IllegalArgumentException(
-                                        "Unknown value: '"
-                                                + value
-                                                + "' for enum "
-                                                + enumClass.getName()));
+                .orElseThrow(() -> new UnknownEnumValueException(enumClass, value));
     }
 }

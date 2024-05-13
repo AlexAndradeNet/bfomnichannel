@@ -40,6 +40,7 @@ public class DataTableValidation {
                     "Tip at Time of Sale",
                     "Clerk ID",
                     "Server ID",
+                    "Accept Tips",
                     "Semi-Integration",
                     "RetailPullMode",
                     "RestaurantPushMode");

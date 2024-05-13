@@ -13,6 +13,7 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.definitions;
 
+import static com.bf.omnichannel.RunnerCucumberTestSuite.TEST_ONLY_VHQ;
 import static com.bf.omnichannel.tasks.salesforce.SfTerminalTasks.getSerialAndTidFromTheNewTerminal;
 
 import com.bf.omnichannel.definitions.data.DataTableAnalyzer;
@@ -42,6 +43,9 @@ public class NewStepsDefinitions {
 
         initializeScenarioData(theActor, dataTable);
 
+        if (TEST_ONLY_VHQ) {
+            return;
+        }
         theActor.attemptsTo(
                 SfDashboardTasks.openTerminalsPage(theActor),
                 SfTerminalTasks.addNewTerminal(theActor));
@@ -49,6 +53,9 @@ public class NewStepsDefinitions {
 
     @When("{actor} creates a new case to deliver the new terminal")
     public void heCreatesANewCaseToDeliverTheNewTerminal(Actor theActor) {
+        if (TEST_ONLY_VHQ) {
+            return;
+        }
         theActor.attemptsTo(
                 SfDashboardTasks.openCasesPage(theActor), SfCaseTasks.addNewCase(theActor));
 
@@ -69,13 +76,16 @@ public class NewStepsDefinitions {
 
         complementScenarioData(theActor, dataTable);
 
-        theActor.wasAbleTo(VhqLoginTasks.openHomePage(), VhqLoginTasks.login());
+        String terminalSerialNumber =
+                (TEST_ONLY_VHQ) ? "200-922-971" : theActor.recall("sfTerminalSerialNumber");
+        String terminalTangoTID =
+                (TEST_ONLY_VHQ) ? "99001198" : theActor.recall("sfTerminalTangoTID");
+
+        theActor.wasAbleTo(VhqLoginTasks.openHomePage(theActor), VhqLoginTasks.login(theActor));
         theActor.attemptsTo(
-                VhqDashboardTasks.searchByTerm(theActor, theActor.recall("sfTerminalSerialNumber")),
+                VhqDashboardTasks.searchByTerm(theActor, terminalSerialNumber),
                 VhqDeviceProfileTasks.checkSerialAndDeviceId(
-                        theActor,
-                        theActor.recall("sfTerminalSerialNumber"),
-                        theActor.recall("sfTerminalTangoTID")),
+                        theActor, terminalSerialNumber, terminalTangoTID),
                 VhqDeviceProfileTasks.openAppParameters(theActor),
                 VhqAppParametersTasks.checkAppParameters(theActor));
     }
@@ -91,6 +101,7 @@ public class NewStepsDefinitions {
 
         completeScenarioData.setVhqClerkID(partialScenarioData.getVhqClerkID());
         completeScenarioData.setVhqServerID(partialScenarioData.getVhqServerID());
+        completeScenarioData.setVhqAcceptTips(partialScenarioData.getVhqAcceptTips());
         completeScenarioData.setVhqRetailPullMode(partialScenarioData.getVhqRetailPullMode());
         completeScenarioData.setVhqRestaurantPushMode(
                 partialScenarioData.getVhqRestaurantPushMode());

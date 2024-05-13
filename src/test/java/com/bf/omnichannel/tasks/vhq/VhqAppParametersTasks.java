@@ -121,7 +121,7 @@ public class VhqAppParametersTasks {
                 softAssertions,
                 theActor,
                 VhqAppParametersPage.ENABLE_ACCEPT_TIP_SELECT,
-                scenarioData.getTipAtTimeOfSale().getVhqEnabledOrDisabledEnum().getValue());
+                scenarioData.getVhqAcceptTips().getValue());
 
         theActor.attemptsTo(PrintResults.fromRecall(2));
 

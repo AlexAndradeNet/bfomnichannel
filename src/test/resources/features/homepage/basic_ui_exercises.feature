@@ -47,7 +47,7 @@ Feature: Creating new terminals
       | Purchase or Rental                   | Purchase from Nuvei          | N/A                |
       | Clerk/Server ID Enablement           | --None--                     | N/A                |
       | Clerk/Server ID Label                | --None--                     | (**Calculated**)   |
-      | Default Terminal Settings            | RETAIL Set-up                | N/A                |
+      | Default Terminal Settings            | RETAIL Set-up                | (**Calculated**)   |
       | Ticket Number                        | --None--                     | DISABLED           |
       | Terminal Auto Batch                  | --None--                     | DISABLED           |
       | Auto Batch Time                      | 23:00                        | 23:00              |
@@ -56,12 +56,13 @@ Feature: Creating new terminals
       | Merchant Receipt Logo                | --None--                     | DISABLED           |
       | Alphanumeric Invoice number          | --None--                     | DISABLED           |
       | Terminal Type                        | Standalone                   | (**Calculated**)   |
-      | Tip at Time of Sale                  | --None--                     | DISABLED           |
+      | Tip at Time of Sale                  | --None--                     | (**Calculated**)   |
     When he creates a new case to deliver the new terminal
     Then he should see that the terminal is created correctly in VHQ, including the following calculated fields
       | VHQ_FIELD          | VHQ_VALUE |
       | Clerk ID           | DISABLED  |
       | Server ID          | DISABLED  |
+      | Accept Tips        | DISABLED  |
       | RetailPullMode     | DISABLED  |
       | RestaurantPushMode | DISABLED  |
       | Semi-Integration   | DISABLED  |

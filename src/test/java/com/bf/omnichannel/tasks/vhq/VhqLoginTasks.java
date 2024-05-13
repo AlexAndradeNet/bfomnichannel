@@ -13,6 +13,7 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.tasks.vhq;
 
+import static net.serenitybdd.core.Serenity.getDriver;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
 
 import com.bf.omnichannel.data.SecretsManager;
@@ -22,12 +23,14 @@ import com.bf.omnichannel.interactions.WaitSpecificTime;
 import com.bf.omnichannel.ui.vhq.VhqDashboardPage;
 import com.bf.omnichannel.ui.vhq.VhqLoginPage;
 import net.serenitybdd.annotations.Step;
+import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.actions.Open;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 import net.serenitybdd.screenplay.waits.WaitUntilAngularIsReady;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 
 public class VhqLoginTasks {
@@ -37,22 +40,28 @@ public class VhqLoginTasks {
     }
 
     @Step("{0} open the main page")
-    public static Performable openHomePage() {
-        return Task.where(
-                "{0} opens the home page",
+    public static Performable openHomePage(Actor theActor) {
+        theActor.attemptsTo(
                 Open.url("https://vhqtest.us3.vfivcs.com/"), WaitForPageLoad.complete());
+        return Task.where("{0} opens the home page");
     }
 
     @Step("{0} enters the username and password")
-    public static Performable login() {
+    public static Performable login(Actor theActor) {
         String username = SecretsManager.getInstance().getVhqUsername();
         String password = SecretsManager.getInstance().getVhqPassword();
 
-        return Task.where(
-                "{0} enters the username and password",
+        theActor.attemptsTo(
                 Enter.theValue("nuvei")
                         .into(VhqLoginPage.TEXTBOX_EMAIL_ID_OR_COMPANY)
                         .thenHit(Keys.ENTER),
+                WaitForPageLoad.complete(),
+                new WaitUntilAngularIsReady(),
+                WaitSpecificTime.forSeconds(2));
+
+        ((JavascriptExecutor) getDriver()).executeScript("window.location.reload(true);");
+
+        theActor.attemptsTo(
                 WaitForPageLoad.complete(),
                 new WaitUntilAngularIsReady(),
                 WaitSpecificTime.forSeconds(2),
@@ -67,5 +76,7 @@ public class VhqLoginTasks {
                         .forNoMoreThan(30)
                         .seconds(),
                 ClickOn.target(VhqDashboardPage.OK_MODAL_BUTTON));
+
+        return Task.where("{0} enters the username and password");
     }
 }

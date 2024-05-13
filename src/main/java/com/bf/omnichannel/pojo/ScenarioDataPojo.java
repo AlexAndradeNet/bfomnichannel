@@ -44,9 +44,10 @@ public class ScenarioDataPojo {
     private YesNoEnabledDisabledPojo merchantReceiptLogo;
     private YesNoEnabledDisabledPojo alphanumericInvoiceNumber;
     private SfTerminalTypeEnum terminalType;
-    private YesNoEnabledDisabledPojo tipAtTimeOfSale;
+    private SfYesOrNoEnum tipAtTimeOfSale;
     private VhqEnabledOrDisabledEnum vhqClerkID;
     private VhqEnabledOrDisabledEnum vhqServerID;
+    private VhqEnabledOrDisabledEnum vhqAcceptTips;
     private VhqEnabledOrDisabledEnum vhqRetailPullMode;
     private VhqEnabledOrDisabledEnum vhqRestaurantPushMode;
     private VhqEnabledOrDisabledEnum vhqSemiIntegration;

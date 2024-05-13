@@ -13,6 +13,7 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.tasks.salesforce;
 
+import static com.bf.omnichannel.RunnerCucumberTestSuite.TEST_ONLY_VHQ;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
 
 import com.bf.omnichannel.data.SecretsManager;
@@ -43,6 +44,10 @@ public class SfLoginTasks {
 
     @Step("{0} enters the username and password")
     public static Performable login(@NotNull Actor theActor) {
+        if (TEST_ONLY_VHQ) {
+            return Task.where("{0} testing only VHQ now, skipping login to Salesforce");
+        }
+
         String username = SecretsManager.getInstance().getSalesForceUsername();
         String password = SecretsManager.getInstance().getSalesForcePassword();
 

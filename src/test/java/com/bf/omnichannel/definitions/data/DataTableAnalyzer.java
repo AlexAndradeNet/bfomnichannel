@@ -176,15 +176,9 @@ public class DataTableAnalyzer {
                                         columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
                         break;
                     case "Tip at Time of Sale":
-                        yesOrNoEnabledDisabledPojo.setSFYesOrNoEnum(
+                        scenarioData.setTipAtTimeOfSale(
                                 SfYesOrNoEnum.fromValue(
                                         columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        yesOrNoEnabledDisabledPojo.setVhqEnabledOrDisabledEnum(
-                                VhqEnabledOrDisabledEnum.fromValue(
-                                        columns.get(
-                                                DataTableColumnsEnum.EXPECTED_VHQ_VALUE
-                                                        .getValue())));
-                        scenarioData.setTipAtTimeOfSale(yesOrNoEnabledDisabledPojo);
                         break;
                     default:
                         exceptionForUnexpectedColumn(columns.toString());
@@ -201,6 +195,11 @@ public class DataTableAnalyzer {
                         break;
                     case "Server ID":
                         scenarioData.setVhqServerID(
+                                VhqEnabledOrDisabledEnum.fromValue(
+                                        columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue())));
+                        break;
+                    case "Accept Tips":
+                        scenarioData.setVhqAcceptTips(
                                 VhqEnabledOrDisabledEnum.fromValue(
                                         columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue())));
                         break;
