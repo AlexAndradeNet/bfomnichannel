@@ -25,7 +25,7 @@ public class EnumUtils {
     public static <E extends Enum<E> & IValuableEnum> E fromValue(
             Class<E> enumClass, String value) {
         return Arrays.stream(enumClass.getEnumConstants())
-                .filter(e -> e.getValue().equals(value))
+                .filter(e -> e.getValue().equalsIgnoreCase(value))
                 .findFirst()
                 .orElseThrow(() -> new UnknownEnumValueException(enumClass, value));
     }

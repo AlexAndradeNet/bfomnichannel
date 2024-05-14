@@ -13,6 +13,8 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.interactions;
 
+import static com.bf.omnichannel.RunnerCucumberTestSuite.SCENARIO_DATA_VARIABLE_NAME;
+
 import com.bf.omnichannel.utils.SimpleLogger;
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.screenplay.Actor;
@@ -49,7 +51,7 @@ public class PrintResults implements Interaction {
         actor.recallAll()
                 .forEach(
                         (key, value) -> {
-                            if (!key.equals("scenarioData")) {
+                            if (!key.equals(SCENARIO_DATA_VARIABLE_NAME)) {
                                 result.append(reportFormat.formatted(key, value));
                             }
                         });

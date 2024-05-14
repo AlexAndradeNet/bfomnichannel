@@ -13,6 +13,7 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.tasks.vhq;
 
+import static com.bf.omnichannel.RunnerCucumberTestSuite.SCENARIO_DATA_VARIABLE_NAME;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
 
 import com.bf.omnichannel.interactions.PrintResults;
@@ -41,7 +42,7 @@ public class VhqAppParametersTasks {
     @Step("{0} opens App Parameters and check its content")
     public static Performable checkAppParameters(Actor theActor) {
 
-        ScenarioDataPojo scenarioData = theActor.recall("scenarioData");
+        ScenarioDataPojo scenarioData = theActor.recall(SCENARIO_DATA_VARIABLE_NAME);
 
         theActor.attemptsTo(
                 Switch.toDefaultContext(),

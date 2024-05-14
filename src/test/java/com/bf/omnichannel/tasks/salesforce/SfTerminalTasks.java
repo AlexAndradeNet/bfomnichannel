@@ -13,6 +13,7 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.tasks.salesforce;
 
+import static com.bf.omnichannel.RunnerCucumberTestSuite.SCENARIO_DATA_VARIABLE_NAME;
 import static net.serenitybdd.core.Serenity.getDriver;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
@@ -45,7 +46,7 @@ public class SfTerminalTasks {
     @Step("{0} adds a new terminal on location '{1}'")
     public static Performable addNewTerminal(@NotNull Actor theActor) {
 
-        ScenarioDataPojo scenarioData = theActor.recall("scenarioData");
+        ScenarioDataPojo scenarioData = theActor.recall(SCENARIO_DATA_VARIABLE_NAME);
 
         theActor.attemptsTo(
                 ClickOn.target(SfTerminalPage.BUTTON_NEW_TERMINAL),

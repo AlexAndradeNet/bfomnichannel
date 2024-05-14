@@ -49,7 +49,7 @@ Feature: Creating new terminals
       | Clerk/Server ID Label                | --None--                     | (**Calculated**)   |
       | Default Terminal Settings            | RETAIL Set-up                | (**Calculated**)   |
       | Ticket Number                        | --None--                     | DISABLED           |
-      | Terminal Auto Batch                  | --None--                     | DISABLED           |
+      | Terminal Auto Batch                  | Yes                          | ENABLED            |
       | Auto Batch Time                      | 23:00                        | 23:00              |
       | Table Number                         | --None--                     | DISABLED           |
       | Cashback                             | --None--                     | DISABLED           |

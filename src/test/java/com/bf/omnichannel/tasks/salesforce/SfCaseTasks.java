@@ -13,6 +13,7 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.tasks.salesforce;
 
+import static com.bf.omnichannel.RunnerCucumberTestSuite.SCENARIO_DATA_VARIABLE_NAME;
 import static net.serenitybdd.core.Serenity.getDriver;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isPresent;
@@ -44,7 +45,7 @@ public class SfCaseTasks {
     @Step("{0} add a new terminal {1}")
     public static Performable addNewCase(@NotNull Actor theActor) {
 
-        ScenarioDataPojo scenarioData = theActor.recall("scenarioData");
+        ScenarioDataPojo scenarioData = theActor.recall(SCENARIO_DATA_VARIABLE_NAME);
 
         theActor.attemptsTo(
                 WaitUntil.the(SfCasePage.BUTTON_INTEGRATION_GUIDE, isPresent()),

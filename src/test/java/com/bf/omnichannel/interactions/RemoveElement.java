@@ -18,6 +18,7 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.targets.Target;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 public class RemoveElement implements Interaction {
@@ -46,11 +47,16 @@ public class RemoveElement implements Interaction {
     @Override
     public <T extends Actor> void performAs(T actor) {
         JavascriptExecutor js = (JavascriptExecutor) Serenity.getDriver();
-        if (target != null) {
-            js.executeScript(
-                    "arguments[0].parentNode.removeChild(arguments[0])", target.resolveFor(actor));
-        } else if (element != null) {
-            js.executeScript("arguments[0].parentNode.removeChild(arguments[0])", element);
+        try {
+            if (target != null) {
+                js.executeScript(
+                        "arguments[0].parentNode.removeChild(arguments[0])",
+                        target.resolveFor(actor));
+            } else if (element != null) {
+                js.executeScript("arguments[0].parentNode.removeChild(arguments[0])", element);
+            }
+        } catch (NoSuchElementException ignored) {
+            // Do nothing
         }
     }
 }

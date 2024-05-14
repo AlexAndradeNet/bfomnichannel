@@ -26,7 +26,8 @@ import org.junit.platform.suite.api.*;
                 "io.cucumber.core.plugin.SerenityReporterParallel,pretty,timeline:build/test-results/timeline")
 @ExcludeTags({"@ignore", "@wip", "@manual", "@skip"})
 public class RunnerCucumberTestSuite {
-    public static final boolean TEST_ONLY_VHQ = true;
+    public static final boolean TEST_ONLY_VHQ = false;
+    public static final String SCENARIO_DATA_VARIABLE_NAME = "scenarioData";
 
     private RunnerCucumberTestSuite() {
         throw new UnsupportedOperationException("utility class");

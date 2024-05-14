@@ -13,6 +13,8 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.definitions.data;
 
+import static com.bf.omnichannel.RunnerCucumberTestSuite.SCENARIO_DATA_VARIABLE_NAME;
+
 import com.bf.omnichannel.data.DataTableValidation;
 import com.bf.omnichannel.enums.DataTableColumnsEnum;
 import com.bf.omnichannel.enums.salesforce.*;
@@ -25,21 +27,27 @@ import com.bf.omnichannel.pojo.auxiliar.YesNoEnabledDisabledPojo;
 import io.cucumber.datatable.DataTable;
 import java.util.List;
 import java.util.Map;
+import net.serenitybdd.screenplay.Actor;
 
 public class DataTableAnalyzer {
     private DataTableAnalyzer() {
         throw new IllegalStateException("Utility class");
     }
 
-    public static ScenarioDataPojo getScenarioDataPojo(DataTable dataTable) {
+    public static void transformAndRememberScenarioData(Actor theActor, DataTable dataTable) {
 
         DataTableValidation.validateRowNames(dataTable.column(0));
 
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
-        var scenarioData = new ScenarioDataPojo();
-        var yesOrNoEnabledDisabledPojo = new YesNoEnabledDisabledPojo();
+        ScenarioDataPojo scenarioData = theActor.recall(SCENARIO_DATA_VARIABLE_NAME);
+
+        if (scenarioData == null) {
+            scenarioData = new ScenarioDataPojo();
+        }
 
         for (Map<String, String> columns : rows) {
+            var yesOrNoEnabledDisabledPojo = new YesNoEnabledDisabledPojo();
+
             if (columns.get(DataTableColumnsEnum.SALESFORCE.getValue()) != null) {
                 switch (columns.get(DataTableColumnsEnum.SALESFORCE.getValue())) {
                     case "Location":
@@ -224,7 +232,7 @@ public class DataTableAnalyzer {
                 }
             }
         }
-        return scenarioData;
+        theActor.remember(SCENARIO_DATA_VARIABLE_NAME, scenarioData);
     }
 
     private static void exceptionForUnexpectedColumn(String columnName) {
