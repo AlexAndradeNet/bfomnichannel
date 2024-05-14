@@ -99,7 +99,7 @@ public class SfCaseTasks {
         return Task.where();
     }
 
-    @Step("{0} assign a terminal to the case (create additional terminals)")
+    @Step("{0} reload the page until the terminal gets configured")
     public static Performable reloadThePageUntilTheTerminalGetsConfigured(Actor theActor) {
 
         final String CONFIGURATION_COMPLETED = "Configuration Completed";

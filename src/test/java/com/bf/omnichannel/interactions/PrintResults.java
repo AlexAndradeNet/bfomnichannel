@@ -43,7 +43,7 @@ public class PrintResults implements Interaction {
         } else {
             reportFormat = PRINT_FORMAT_FOR_VHQ;
 
-            logger.info("\n########## VALIDATION ##########\n");
+            result.append("\n########## VALIDATION ##########\n");
             result.append("|Field|Expected value|Actual value|Result|\n");
             result.append("|-----|--------------|------------|------|\n");
         }

@@ -28,6 +28,9 @@ public class VhqDashboardPage extends PageObject {
             Target.the("textbox Search")
                     .locatedBy("//input[@type='text' and @placeholder='Search by Serial Number']");
 
-    public static final Target OK_MODAL_BUTTON =
+    public static final Target OK_LICENCES_BUTTON =
             Target.the("button Ok Modal").locatedBy("//button[@id='pbtnOK']");
+
+    public static final Target OK_INFO_BUTTON =
+            Target.the("button Ok Modal").locatedBy("//button[@id='infoBtnOk']");
 }

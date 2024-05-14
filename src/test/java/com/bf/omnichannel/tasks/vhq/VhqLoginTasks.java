@@ -48,6 +48,13 @@ public class VhqLoginTasks {
 
     @Step("{0} enters the username and password")
     public static Performable login(Actor theActor) {
+        boolean isAlreadyLoggedIn = !getDriver().getCurrentUrl().contains("Authentication");
+
+        if (isAlreadyLoggedIn) {
+            dismissAlert(theActor);
+            return Task.where("{0} is already logged in");
+        }
+
         String username = SecretsManager.getInstance().getVhqUsername();
         String password = SecretsManager.getInstance().getVhqPassword();
 
@@ -71,12 +78,33 @@ public class VhqLoginTasks {
                 ClickOn.target(VhqLoginPage.BUTTON_SIGN_ME_IN),
                 WaitForPageLoad.complete(),
                 new WaitUntilAngularIsReady(),
-                WaitUntil.the(VhqDashboardPage.TEXTBOX_SEARCH, isClickable()),
-                WaitUntil.the(VhqDashboardPage.OK_MODAL_BUTTON, isClickable())
-                        .forNoMoreThan(30)
-                        .seconds(),
-                ClickOn.target(VhqDashboardPage.OK_MODAL_BUTTON));
+                WaitUntil.the(VhqDashboardPage.TEXTBOX_SEARCH, isClickable())
+                        .forNoMoreThan(100)
+                        .seconds());
+
+        dismissAlert(theActor);
 
         return Task.where("{0} enters the username and password");
+    }
+
+    private static Performable dismissAlert(Actor theActor) {
+        do {
+            try {
+                theActor.attemptsTo(
+                        WaitUntil.the(VhqDashboardPage.OK_LICENCES_BUTTON, isClickable())
+                                .forNoMoreThan(30)
+                                .seconds()
+                                .then(ClickOn.target(VhqDashboardPage.OK_LICENCES_BUTTON)));
+                break;
+            } catch (Exception e) {
+                if (VhqDashboardPage.OK_INFO_BUTTON.resolveFor(theActor).isPresent()) {
+                    theActor.attemptsTo(
+                            ClickOn.target(VhqDashboardPage.OK_INFO_BUTTON),
+                            WaitSpecificTime.forSeconds(2));
+                }
+            }
+        } while (true);
+
+        return Task.where("{0} dismisses the alert");
     }
 }

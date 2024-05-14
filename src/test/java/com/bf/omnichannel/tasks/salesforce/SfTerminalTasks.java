@@ -23,6 +23,7 @@ import com.bf.omnichannel.pojo.ScenarioDataPojo;
 import com.bf.omnichannel.ui.salesforce.SfDashboardPage;
 import com.bf.omnichannel.ui.salesforce.SfTerminalPage;
 import com.bf.omnichannel.utils.RegexTextExtractor;
+import com.bf.omnichannel.utils.SimpleLogger;
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
@@ -33,11 +34,15 @@ import net.serenitybdd.screenplay.actions.Scroll;
 import net.serenitybdd.screenplay.ensure.Ensure;
 import net.serenitybdd.screenplay.questions.Attribute;
 import net.serenitybdd.screenplay.questions.Text;
+import net.serenitybdd.screenplay.targets.Target;
 import net.serenitybdd.screenplay.waits.WaitUntil;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.JavascriptExecutor;
 
 public class SfTerminalTasks {
+
+    private static final SimpleLogger logger = new SimpleLogger(SfTerminalTasks.class);
 
     private SfTerminalTasks() {
         throw new IllegalStateException("Utility class");
@@ -118,11 +123,12 @@ public class SfTerminalTasks {
     }
 
     @Step("{0} gets the serial number and Tango ID from the new terminal {1}")
-    public static Performable getSerialAndTidFromTheNewTerminal(Actor theActor) {
+    public static Performable reopenTheTerminalPage(Actor theActor) {
 
         String termToSearch = theActor.recall("sfTerminalId");
+        // String termToSearch = "T-2806";
 
-        theActor.attemptsTo(SfDashboardTasks.searchByTerm(termToSearch));
+        theActor.attemptsTo(SfDashboardTasks.searchByTerm(theActor, termToSearch));
 
         String terminalResultURL =
                 Attribute.of(SfDashboardPage.FOUND_TERM_LINK.of(termToSearch))
@@ -143,25 +149,50 @@ public class SfTerminalTasks {
                         .forNoMoreThan(100)
                         .seconds());
 
-        while (Text.of(SfTerminalPage.VALUE_TABLE_SERIAL_NUMBER).answeredBy(theActor).isEmpty()) {
-            ((JavascriptExecutor) getDriver()).executeScript("window.location.reload(true);");
-            theActor.attemptsTo(WaitForPageLoad.complete(), WaitSpecificTime.forSeconds(30));
-        }
+        return Task.where();
+    }
 
+    @Step("{0} reload the page until the terminal gets its serial number and Tango ID")
+    public static Performable reloadThePageUntilTheTerminalGetsItsSerial(Actor theActor) {
+
+        String currentStatus = "";
+        Target target = SfTerminalPage.VALUE_TABLE_STATUS;
+
+        logger.debug("XXXXXXXXXXXXXX Starting reloadThePageUntilTheTerminalGetsConfigured");
+
+        do {
+            theActor.attemptsTo(WaitSpecificTime.forSeconds(30));
+            ((JavascriptExecutor) getDriver()).executeScript("window.location.reload(true);");
+            theActor.attemptsTo(
+                    WaitForPageLoad.complete(),
+                    WaitUntil.the(target, isVisible()).forNoMoreThan(100).seconds());
+            currentStatus = Text.of(target).answeredBy(theActor);
+        } while (StringUtils.isEmpty(currentStatus) || currentStatus.equals("Submitted"));
+
+        logger.debug("XXXXXXXXXXXXXX Finished reloadThePageUntilTheTerminalGetsConfigured");
+
+        theActor.attemptsTo(Ensure.that(target).text().isEqualTo("Pending activation"));
+
+        return Task.where();
+    }
+
+    @Step("{0} saves the terminal serial number and Tango ID")
+    public static Performable saveTheTerminalSerialNumber(Actor theActor) {
         theActor.attemptsTo(
                 Ensure.that(Text.of(SfTerminalPage.VALUE_TABLE_STATUS).answeredBy(theActor))
-                        .isNotEmpty(),
+                        .isEqualTo("Pending activation"),
                 Ensure.that(Text.of(SfTerminalPage.VALUE_TABLE_SERIAL_NUMBER).answeredBy(theActor))
                         .isNotEmpty(),
                 Ensure.that(Text.of(SfTerminalPage.VALUE_TABLE_TANGO_TID).answeredBy(theActor))
-                        .isNotEmpty(),
+                        .isNotEmpty());
+
+        theActor.attemptsTo(
                 RememberInfo.forTarget(
                         theActor,
                         SfTerminalPage.VALUE_TABLE_SERIAL_NUMBER,
                         "sfTerminalSerialNumber"),
                 RememberInfo.forTarget(
                         theActor, SfTerminalPage.VALUE_TABLE_TANGO_TID, "sfTerminalTangoTID"));
-
         return Task.where();
     }
 }

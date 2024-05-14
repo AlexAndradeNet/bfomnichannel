@@ -14,7 +14,7 @@ from Nuvei Inc.
 package com.bf.omnichannel.definitions;
 
 import static com.bf.omnichannel.RunnerCucumberTestSuite.TEST_ONLY_VHQ;
-import static com.bf.omnichannel.tasks.salesforce.SfTerminalTasks.getSerialAndTidFromTheNewTerminal;
+import static com.bf.omnichannel.tasks.salesforce.SfTerminalTasks.*;
 
 import com.bf.omnichannel.definitions.data.DataTableAnalyzer;
 import com.bf.omnichannel.interactions.PrintResults;
@@ -30,6 +30,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.screenplay.Actor;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class NewStepsDefinitions {
@@ -59,7 +60,9 @@ public class NewStepsDefinitions {
         theActor.attemptsTo(
                 SfCaseTasks.assignATerminalToTheCase(theActor),
                 SfCaseTasks.reloadThePageUntilTheTerminalGetsConfigured(theActor),
-                getSerialAndTidFromTheNewTerminal(theActor));
+                reopenTheTerminalPage(theActor),
+                reloadThePageUntilTheTerminalGetsItsSerial(theActor),
+                saveTheTerminalSerialNumber(theActor));
 
         theActor.attemptsTo(PrintResults.fromRecall(1));
     }
@@ -73,10 +76,15 @@ public class NewStepsDefinitions {
 
         DataTableAnalyzer.transformAndRememberScenarioData(theActor, dataTable);
 
-        String terminalSerialNumber =
-                (TEST_ONLY_VHQ) ? "200-922-971" : theActor.recall("sfTerminalSerialNumber");
-        String terminalTangoTID =
-                (TEST_ONLY_VHQ) ? "99001198" : theActor.recall("sfTerminalTangoTID");
+        String terminalSerialNumber = theActor.recall("sfTerminalSerialNumber");
+        if (StringUtils.isEmpty(terminalSerialNumber) && TEST_ONLY_VHQ) {
+            terminalSerialNumber = "200-922-971";
+        }
+
+        String terminalTangoTID = theActor.recall("sfTerminalTangoTID");
+        if (StringUtils.isEmpty(terminalTangoTID) && TEST_ONLY_VHQ) {
+            terminalTangoTID = "99001198";
+        }
 
         theActor.wasAbleTo(VhqLoginTasks.openHomePage(theActor), VhqLoginTasks.login(theActor));
         theActor.attemptsTo(
@@ -85,5 +93,17 @@ public class NewStepsDefinitions {
                         theActor, terminalSerialNumber, terminalTangoTID),
                 VhqDeviceProfileTasks.openAppParameters(theActor),
                 VhqAppParametersTasks.checkAppParameters(theActor));
+    }
+
+    @Then(
+            "{actor} should see that the terminal {string} with TID {string} is created correctly"
+                    + " in VHQ, including the following calculated fields")
+    public void
+            heShouldSeeThatTheTerminalIsCreatedCorrectlyInVHQIncludingTheFollowingCalculatedFields(
+                    Actor theActor, String serial, String tid, DataTable dataTable) {
+        theActor.remember("sfTerminalSerialNumber", serial);
+        theActor.remember("sfTerminalTangoTID", tid);
+        heShouldSeeThatTheTerminalIsCreatedCorrectlyInVHQIncludingTheFollowingCalculatedFields(
+                theActor, dataTable);
     }
 }
