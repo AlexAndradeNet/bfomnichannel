@@ -22,7 +22,8 @@ public enum SfCommunicationMethodEnum implements IValuableEnum {
     NONE("--None--"),
     IP_SSL("IP/SSL"),
     WIFI("WiFi"),
-    CELLULAR("Cellular");
+    CELLULAR("Cellular"),
+    ;
 
     private final String value;
 

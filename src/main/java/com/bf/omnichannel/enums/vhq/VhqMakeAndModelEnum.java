@@ -21,7 +21,8 @@ import lombok.Getter;
 public enum VhqMakeAndModelEnum implements IValuableEnum {
     NONE(""),
     T650C("T650c"),
-    T650P("T650p");
+    T650P("T650p"),
+    ;
 
     private final String value;
 

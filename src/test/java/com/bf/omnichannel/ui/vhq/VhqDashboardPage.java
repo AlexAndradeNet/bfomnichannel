@@ -28,6 +28,10 @@ public class VhqDashboardPage extends PageObject {
             Target.the("textbox Search")
                     .locatedBy("//input[@type='text' and @placeholder='Search by Serial Number']");
 
+    public static final Target LICENSES_COUNT_SPAN =
+            Target.the("span Licenses count")
+                    .locatedBy("//span[@id='CW_TOTAL_DEVICE_COUNTcounterCountPro']");
+
     public static final Target OK_LICENCES_BUTTON =
             Target.the("button Ok Modal").locatedBy("//button[@id='pbtnOK']");
 

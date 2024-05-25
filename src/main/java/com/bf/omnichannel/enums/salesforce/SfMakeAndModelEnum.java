@@ -21,7 +21,8 @@ import lombok.Getter;
 public enum SfMakeAndModelEnum implements IValuableEnum {
     NONE("--None--"),
     T650C("Verifone Android Model T650c"),
-    T650P("Verifone Android Model T650p");
+    T650P("Verifone Android Model T650p"),
+    ;
 
     private final String value;
 

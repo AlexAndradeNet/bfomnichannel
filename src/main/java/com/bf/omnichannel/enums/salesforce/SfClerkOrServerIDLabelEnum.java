@@ -21,7 +21,8 @@ import lombok.Getter;
 public enum SfClerkOrServerIDLabelEnum implements IValuableEnum {
     NONE("--None--"),
     CLERK_ID("Clerk ID"),
-    SERVER_ID("Server ID");
+    SERVER_ID("Server ID"),
+    ;
 
     private final String value;
 

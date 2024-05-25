@@ -21,7 +21,8 @@ import lombok.Getter;
 public enum SfTerminalTypeEnum implements IValuableEnum {
     NONE("--None--"),
     STANDALONE("Standalone"),
-    INTEGRATED("Integrated");
+    INTEGRATED("Integrated"),
+    ;
 
     private final String value;
 

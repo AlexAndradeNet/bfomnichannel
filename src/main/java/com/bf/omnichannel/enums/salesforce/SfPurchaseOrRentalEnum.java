@@ -21,7 +21,8 @@ import lombok.Getter;
 public enum SfPurchaseOrRentalEnum implements IValuableEnum {
     NONE("--None--"),
     PURCHASE("Purchase from Nuvei"),
-    RENT("Rent from Nuvei");
+    RENT("Rent from Nuvei"),
+    ;
 
     private final String value;
 

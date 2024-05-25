@@ -15,6 +15,7 @@ package com.bf.omnichannel.tasks.vhq;
 
 import static net.serenitybdd.core.Serenity.getDriver;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isCurrentlyVisible;
 
 import com.bf.omnichannel.data.SecretsManager;
 import com.bf.omnichannel.interactions.ClickOn;
@@ -78,7 +79,7 @@ public class VhqLoginTasks {
                 ClickOn.target(VhqLoginPage.BUTTON_SIGN_ME_IN),
                 WaitForPageLoad.complete(),
                 new WaitUntilAngularIsReady(),
-                WaitUntil.the(VhqDashboardPage.TEXTBOX_SEARCH, isClickable())
+                WaitUntil.the(VhqDashboardPage.LICENSES_COUNT_SPAN, isCurrentlyVisible())
                         .forNoMoreThan(100)
                         .seconds());
 
@@ -88,6 +89,18 @@ public class VhqLoginTasks {
     }
 
     private static Performable dismissAlert(Actor theActor) {
+        final int MAX_NUMBER_REGISTERED_TERMINAL_ALERT = 400;
+
+        if (!VhqDashboardPage.LICENSES_COUNT_SPAN.resolveFor(theActor).isCurrentlyVisible()) {
+            return Task.where("{0} no need to dismiss the alert");
+        }
+
+        if (Integer.parseInt(
+                        VhqDashboardPage.LICENSES_COUNT_SPAN.resolveFor(theActor).getText().trim())
+                < MAX_NUMBER_REGISTERED_TERMINAL_ALERT) {
+            return Task.where("{0} no need to dismiss the alert");
+        }
+
         do {
             try {
                 theActor.attemptsTo(

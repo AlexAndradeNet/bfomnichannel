@@ -13,37 +13,21 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.data;
 
+import com.bf.omnichannel.enums.salesforce.SfTerminalFieldsEnum;
+import com.bf.omnichannel.enums.vhq.VhqTerminalFieldsEnum;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Stream;
 
 public class DataTableValidation {
-    private static final Set<String> EXPECTED_COLUMN_NAMES =
-            Set.of(
-                    "Location",
-                    "Company Profile",
-                    "Make and Model",
-                    "Status",
-                    "Communication Method",
-                    "Charge Equipment Cost incl. Shipping",
-                    "Purchase or Rental",
-                    "Clerk/Server ID Enablement",
-                    "Clerk/Server ID Label",
-                    "Default Terminal Settings",
-                    "Ticket Number",
-                    "Terminal Auto Batch",
-                    "Auto Batch Time",
-                    "Table Number",
-                    "Cashback",
-                    "Merchant Receipt Logo",
-                    "Alphanumeric Invoice number",
-                    "Terminal Type",
-                    "Tip at Time of Sale",
-                    "Clerk ID",
-                    "Server ID",
-                    "Accept Tips",
-                    "Semi-Integration",
-                    "RetailPullMode",
-                    "RestaurantPushMode");
+
+    private static final List<String> EXPECTED_COLUMN_NAMES =
+            Stream.concat(
+                            Arrays.stream(SfTerminalFieldsEnum.values())
+                                    .map(SfTerminalFieldsEnum::getValue),
+                            Arrays.stream(VhqTerminalFieldsEnum.values())
+                                    .map(VhqTerminalFieldsEnum::getValue))
+                    .toList();
 
     private DataTableValidation() {
         // Prevent instantiation

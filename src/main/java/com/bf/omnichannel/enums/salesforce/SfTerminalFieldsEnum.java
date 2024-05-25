@@ -20,6 +20,7 @@ import lombok.Getter;
 @Getter
 public enum SfTerminalFieldsEnum implements IValuableEnum {
     LOCATION("Location"),
+    COMPANY_PROFILE("Company Profile"),
     MAKE_AND_MODEL("Make and Model"),
     STATUS("Status"),
     COMMUNICATION_METHOD("Communication Method"),
@@ -36,7 +37,8 @@ public enum SfTerminalFieldsEnum implements IValuableEnum {
     MERCHANT_RECEIPT_LOGO("Merchant Receipt Logo"),
     ALPHANUMERIC_INVOICE_NUMBER("Alphanumeric Invoice number"),
     TERMINAL_TYPE("Terminal Type"),
-    TIP_AT_TIME_OF_SALE("Tip at Time of Sale");
+    TIP_AT_TIME_OF_SALE("Tip at Time of Sale"),
+    ;
 
     private final String value;
 

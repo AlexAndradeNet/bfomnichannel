@@ -13,6 +13,7 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.ui.salesforce;
 
+import com.bf.omnichannel.enums.salesforce.SfTerminalFieldsEnum;
 import net.serenitybdd.annotations.DefaultUrl;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.screenplay.targets.Target;
@@ -31,40 +32,58 @@ public class SfTerminalPage extends PageObject {
             Target.the("button new terminal").locatedBy("//li[.='New']");
 
     public static final Target COMBOBOX_MAKE_AND_MODEL =
-            Target.the("combobox make and model")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Make and Model"));
+            Target.the("combobox " + SfTerminalFieldsEnum.MAKE_AND_MODEL.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.MAKE_AND_MODEL.getValue()));
 
     public static final Target COMBOBOX_COMMUNICATION_METHOD =
-            Target.the("combobox communication method")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Communication Method"));
+            Target.the("combobox " + SfTerminalFieldsEnum.COMMUNICATION_METHOD.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.COMMUNICATION_METHOD.getValue()));
 
     public static final Target COMBOBOX_CHARGE_EQUIPMENT =
-            Target.the("combobox charge equipment")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Charge Equipment"));
+            Target.the("combobox " + SfTerminalFieldsEnum.CHARGE_EQUIPMENT_COST.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.CHARGE_EQUIPMENT_COST.getValue()));
 
     public static final Target COMBOBOX_CLERK_OR_SERVER_ID_ENABLEMENT =
-            Target.the("combobox Clerk/Server ID enablement")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Clerk/Server ID Enablement"));
+            Target.the("combobox " + SfTerminalFieldsEnum.CLERK_SERVER_ID_ENABLEMENT.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.CLERK_SERVER_ID_ENABLEMENT.getValue()));
 
     public static final Target COMBOBOX_CLERK_OR_SERVER_ID_LABEL =
-            Target.the("combobox Clerk/Server ID label")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Clerk/Server ID Label"));
+            Target.the("combobox " + SfTerminalFieldsEnum.CLERK_SERVER_ID_LABEL.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.CLERK_SERVER_ID_LABEL.getValue()));
 
     public static final Target COMBOBOX_TICKET_NUMBER =
-            Target.the("combobox ticket number")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Ticket Number"));
+            Target.the("combobox " + SfTerminalFieldsEnum.TICKET_NUMBER.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.TICKET_NUMBER.getValue()));
 
     public static final Target COMBOBOX_TABLE_NUMBER =
-            Target.the("combobox table number")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Table Number"));
+            Target.the("combobox " + SfTerminalFieldsEnum.TABLE_NUMBER.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.TABLE_NUMBER.getValue()));
 
     public static final Target COMBOBOX_MERCHANT_RECEIPT_LOGO =
-            Target.the("combobox merchant receipt logo")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Merchant Receipt Logo"));
+            Target.the("combobox " + SfTerminalFieldsEnum.MERCHANT_RECEIPT_LOGO.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.MERCHANT_RECEIPT_LOGO.getValue()));
 
     public static final Target COMBOBOX_TERMINAL_TYPE =
-            Target.the("combobox terminal type")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Terminal Type"));
+            Target.the("combobox " + SfTerminalFieldsEnum.TERMINAL_TYPE.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.TERMINAL_TYPE.getValue()));
 
     // Right panel
 
@@ -73,34 +92,50 @@ public class SfTerminalPage extends PageObject {
                     .locatedBy("//input[@placeholder='Search Locations...']");
 
     public static final Target COMBOBOX_STATUS =
-            Target.the("combobox status").locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Status"));
+            Target.the("combobox " + SfTerminalFieldsEnum.STATUS.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.STATUS.getValue()));
 
     public static final Target COMBOBOX_PURCHASE_OR_RENTAL =
-            Target.the("combobox purchase or rental")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Purchase or Rental"));
+            Target.the("combobox " + SfTerminalFieldsEnum.PURCHASE_OR_RENTAL.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.PURCHASE_OR_RENTAL.getValue()));
 
     public static final Target COMBOBOX_DEFAULT_TERMINAL_SETTINGS =
-            Target.the("combobox default terminal settings")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Default Terminal Settings"));
+            Target.the("combobox " + SfTerminalFieldsEnum.DEFAULT_TERMINAL_SETTINGS.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.DEFAULT_TERMINAL_SETTINGS.getValue()));
 
     public static final Target COMBOBOX_TERMINAL_AUTO_BATCH =
-            Target.the("combobox terminal auto batch")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Terminal Auto Batch"));
+            Target.the("combobox " + SfTerminalFieldsEnum.TERMINAL_AUTO_BATCH.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.TERMINAL_AUTO_BATCH.getValue()));
 
     public static final Target COMBOBOX_AUTO_BATCH_TIME =
-            Target.the("combobox auto batch time").locatedBy("//input[@name='Auto_Batch_Time__c']");
+            Target.the("combobox " + SfTerminalFieldsEnum.AUTO_BATCH_TIME.getValue())
+                    .locatedBy("//input[@name='Auto_Batch_Time__c']");
 
     public static final Target COMBOBOX_CASHBACK =
-            Target.the("combobox cashback")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Cashback"));
+            Target.the("combobox " + SfTerminalFieldsEnum.CASHBACK.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.CASHBACK.getValue()));
 
     public static final Target COMBOBOX_ALPHANUMERIC_INVOICE_NUMBER =
-            Target.the("combobox alphanumeric invoice number")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Alphanumeric Invoice number"));
+            Target.the("combobox " + SfTerminalFieldsEnum.ALPHANUMERIC_INVOICE_NUMBER.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.ALPHANUMERIC_INVOICE_NUMBER.getValue()));
 
     public static final Target COMBOBOX_TIP_AT_TIME_OF_SALE =
-            Target.the("combobox tip at time of sale")
-                    .locatedBy(COMBOBOX_LOCATOR_TEMPLATE.formatted("Tip at Time of Sale"));
+            Target.the("combobox " + SfTerminalFieldsEnum.TIP_AT_TIME_OF_SALE.getValue())
+                    .locatedBy(
+                            COMBOBOX_LOCATOR_TEMPLATE.formatted(
+                                    SfTerminalFieldsEnum.TIP_AT_TIME_OF_SALE.getValue()));
 
     public static final Target BUTTON_SAVE =
             Target.the("button save").locatedBy("//button[text()='Save']");

@@ -21,7 +21,8 @@ import lombok.Getter;
 public enum SfChargeEquipmentEnum implements IValuableEnum {
     NONE("--None--"),
     PARTNER("Partner"),
-    MERCHANT("Merchant");
+    MERCHANT("Merchant"),
+    ;
 
     private final String value;
 
