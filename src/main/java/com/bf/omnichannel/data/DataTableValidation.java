@@ -15,19 +15,20 @@ package com.bf.omnichannel.data;
 
 import com.bf.omnichannel.enums.salesforce.SfTerminalFieldsEnum;
 import com.bf.omnichannel.enums.vhq.VhqTerminalFieldsEnum;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DataTableValidation {
 
-    private static final List<String> EXPECTED_COLUMN_NAMES =
+    private static final Set<String> EXPECTED_COLUMN_NAMES =
             Stream.concat(
-                            Arrays.stream(SfTerminalFieldsEnum.values())
+                            Stream.of(SfTerminalFieldsEnum.values())
                                     .map(SfTerminalFieldsEnum::getValue),
-                            Arrays.stream(VhqTerminalFieldsEnum.values())
+                            Stream.of(VhqTerminalFieldsEnum.values())
                                     .map(VhqTerminalFieldsEnum::getValue))
-                    .toList();
+                    .collect(Collectors.toSet());
 
     private DataTableValidation() {
         // Prevent instantiation
@@ -38,11 +39,10 @@ public class DataTableValidation {
                 actualColumnNames.subList(
                         1, actualColumnNames.size()); // Remove the first column name
 
-        // Check if all actual column names are expected
         for (String columnName : newList) {
             if (!EXPECTED_COLUMN_NAMES.contains(columnName)) {
                 throw new AssertionError(
-                        "Unexpected column name found: '%s'".formatted(columnName));
+                        String.format("Unexpected column name found: '%s'", columnName));
             }
         }
     }

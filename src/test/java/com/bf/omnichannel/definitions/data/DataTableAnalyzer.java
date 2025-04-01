@@ -48,191 +48,151 @@ public class DataTableAnalyzer {
         for (Map<String, String> columns : rows) {
             var yesOrNoEnabledDisabledPojo = new YesNoEnabledDisabledPojo();
 
-            if (columns.get(DataTableColumnsEnum.SALESFORCE.getValue()) != null) {
-                switch (columns.get(DataTableColumnsEnum.SALESFORCE.getValue())) {
-                    case "Location":
-                        scenarioData.setLocation(
-                                columns.get(DataTableColumnsEnum.SF_VALUE.getValue()));
-                        break;
-                    case "Company Profile":
-                        scenarioData.setCompanyProfile(
-                                columns.get(DataTableColumnsEnum.SF_VALUE.getValue()));
-                        break;
-                    case "Make and Model":
-                        MakeAndModelPojo makeAndModel = new MakeAndModelPojo();
-                        makeAndModel.setSfMakeAndModelEnum(
-                                SfMakeAndModelEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        makeAndModel.setVhqMakeAndModelEnum(
-                                VhqMakeAndModelEnum.fromValue(
-                                        columns.get(
-                                                DataTableColumnsEnum.EXPECTED_VHQ_VALUE
-                                                        .getValue())));
-                        scenarioData.setMakeAndModel(makeAndModel);
-                        break;
-                    case "Status":
-                        scenarioData.setStatus(
-                                columns.get(DataTableColumnsEnum.SF_VALUE.getValue()));
-                        break;
-                    case "Communication Method":
-                        scenarioData.setCommunicationMethod(
-                                SfCommunicationMethodEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        break;
-                    case "Charge Equipment Cost incl. Shipping":
-                        scenarioData.setChargeEquipmentCostInclShipping(
-                                SfChargeEquipmentEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        break;
-                    case "Purchase or Rental":
-                        scenarioData.setPurchaseOrRental(
-                                SfPurchaseOrRentalEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        break;
-                    case "Clerk/Server ID Enablement":
-                        scenarioData.setClerkServerIdEnablement(
-                                SfYesOrNoEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        break;
-                    case "Clerk/Server ID Label":
-                        scenarioData.setClerkServerIdLabel(
-                                SfClerkOrServerIDLabelEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        break;
-                    case "Default Terminal Settings":
-                        scenarioData.setDefaultTerminalSettings(
-                                SfDefaultTerminalSettingsEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        break;
-                    case "Ticket Number":
-                        yesOrNoEnabledDisabledPojo.setSFYesOrNoEnum(
-                                SfYesOrNoEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        yesOrNoEnabledDisabledPojo.setVhqEnabledOrDisabledEnum(
-                                VhqEnabledOrDisabledEnum.fromValue(
-                                        columns.get(
-                                                DataTableColumnsEnum.EXPECTED_VHQ_VALUE
-                                                        .getValue())));
-                        scenarioData.setTicketNumber(yesOrNoEnabledDisabledPojo);
-                        break;
-                    case "Terminal Auto Batch":
-                        yesOrNoEnabledDisabledPojo.setSFYesOrNoEnum(
-                                SfYesOrNoEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        yesOrNoEnabledDisabledPojo.setVhqEnabledOrDisabledEnum(
-                                VhqEnabledOrDisabledEnum.fromValue(
-                                        columns.get(
-                                                DataTableColumnsEnum.EXPECTED_VHQ_VALUE
-                                                        .getValue())));
-                        scenarioData.setTerminalAutoBatch(yesOrNoEnabledDisabledPojo);
-                        break;
-                    case "Auto Batch Time":
-                        var autoBatchTimePojo = new AutoBatchTimePojo();
-                        autoBatchTimePojo.setSFAutoBatchTime(
-                                columns.get(DataTableColumnsEnum.SF_VALUE.getValue()));
-                        autoBatchTimePojo.setVhqAutoBatchTime(
-                                columns.get(DataTableColumnsEnum.EXPECTED_VHQ_VALUE.getValue()));
-                        scenarioData.setAutoBatchTime(autoBatchTimePojo);
-                        break;
-                    case "Table Number":
-                        yesOrNoEnabledDisabledPojo.setSFYesOrNoEnum(
-                                SfYesOrNoEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        yesOrNoEnabledDisabledPojo.setVhqEnabledOrDisabledEnum(
-                                VhqEnabledOrDisabledEnum.fromValue(
-                                        columns.get(
-                                                DataTableColumnsEnum.EXPECTED_VHQ_VALUE
-                                                        .getValue())));
-                        scenarioData.setTableNumber(yesOrNoEnabledDisabledPojo);
-                        break;
-                    case "Cashback":
-                        yesOrNoEnabledDisabledPojo.setSFYesOrNoEnum(
-                                SfYesOrNoEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        yesOrNoEnabledDisabledPojo.setVhqEnabledOrDisabledEnum(
-                                VhqEnabledOrDisabledEnum.fromValue(
-                                        columns.get(
-                                                DataTableColumnsEnum.EXPECTED_VHQ_VALUE
-                                                        .getValue())));
-                        scenarioData.setCashback(yesOrNoEnabledDisabledPojo);
-                        break;
-                    case "Merchant Receipt Logo":
-                        yesOrNoEnabledDisabledPojo.setSFYesOrNoEnum(
-                                SfYesOrNoEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        yesOrNoEnabledDisabledPojo.setVhqEnabledOrDisabledEnum(
-                                VhqEnabledOrDisabledEnum.fromValue(
-                                        columns.get(
-                                                DataTableColumnsEnum.EXPECTED_VHQ_VALUE
-                                                        .getValue())));
-                        scenarioData.setMerchantReceiptLogo(yesOrNoEnabledDisabledPojo);
-                        break;
-                    case "Alphanumeric Invoice number":
-                        yesOrNoEnabledDisabledPojo.setSFYesOrNoEnum(
-                                SfYesOrNoEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        yesOrNoEnabledDisabledPojo.setVhqEnabledOrDisabledEnum(
-                                VhqEnabledOrDisabledEnum.fromValue(
-                                        columns.get(
-                                                DataTableColumnsEnum.EXPECTED_VHQ_VALUE
-                                                        .getValue())));
-                        scenarioData.setAlphanumericInvoiceNumber(yesOrNoEnabledDisabledPojo);
-                        break;
-                    case "Terminal Type":
-                        scenarioData.setTerminalType(
-                                SfTerminalTypeEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        break;
-                    case "Tip at Time of Sale":
-                        scenarioData.setTipAtTimeOfSale(
-                                SfYesOrNoEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.SF_VALUE.getValue())));
-                        break;
-                    default:
-                        exceptionForUnexpectedColumn(columns.toString());
-                        break;
-                }
+            String salesforceValue = columns.get(DataTableColumnsEnum.SALESFORCE.getValue());
+            String sfValue = columns.get(DataTableColumnsEnum.SF_VALUE.getValue());
+            String vhqValue = columns.get(DataTableColumnsEnum.EXPECTED_VHQ_VALUE.getValue());
+
+            if (salesforceValue != null) {
+                processSalesforceData(
+                        columns,
+                        scenarioData,
+                        yesOrNoEnabledDisabledPojo,
+                        salesforceValue,
+                        sfValue,
+                        vhqValue);
             }
 
-            if (columns.get(DataTableColumnsEnum.VHQ_FIELD.getValue()) != null) {
-                switch (columns.get(DataTableColumnsEnum.VHQ_FIELD.getValue())) {
-                    case "Clerk ID":
-                        scenarioData.setVhqClerkID(
-                                VhqEnabledOrDisabledEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue())));
-                        break;
-                    case "Server ID":
-                        scenarioData.setVhqServerID(
-                                VhqEnabledOrDisabledEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue())));
-                        break;
-                    case "Accept Tips":
-                        scenarioData.setVhqAcceptTips(
-                                VhqEnabledOrDisabledEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue())));
-                        break;
-                    case "RetailPullMode":
-                        scenarioData.setVhqRetailPullMode(
-                                VhqEnabledOrDisabledEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue())));
-                        break;
-                    case "RestaurantPushMode":
-                        scenarioData.setVhqRestaurantPushMode(
-                                VhqEnabledOrDisabledEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue())));
-                        break;
-                    case "Semi-Integration":
-                        scenarioData.setVhqSemiIntegration(
-                                VhqEnabledOrDisabledEnum.fromValue(
-                                        columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue())));
-                        break;
-                    default:
-                        exceptionForUnexpectedColumn(columns.toString());
-                        break;
-                }
+            String vhqField = columns.get(DataTableColumnsEnum.VHQ_FIELD.getValue());
+            if (vhqField != null) {
+                processVhqData(columns, scenarioData, vhqField);
             }
         }
         theActor.remember(SCENARIO_DATA_VARIABLE_NAME, scenarioData);
+    }
+
+    private static void processSalesforceData(
+            Map<String, String> columns,
+            ScenarioDataPojo scenarioData,
+            YesNoEnabledDisabledPojo yesOrNoEnabledDisabledPojo,
+            String salesforceValue,
+            String sfValue,
+            String vhqValue) {
+        switch (salesforceValue) {
+            case "Location":
+                scenarioData.setLocation(sfValue);
+                break;
+            case "Company Profile":
+                scenarioData.setCompanyProfile(sfValue);
+                break;
+            case "Make and Model":
+                MakeAndModelPojo makeAndModel = new MakeAndModelPojo();
+                makeAndModel.setSfMakeAndModelEnum(SfMakeAndModelEnum.fromValue(sfValue));
+                makeAndModel.setVhqMakeAndModelEnum(VhqMakeAndModelEnum.fromValue(vhqValue));
+                scenarioData.setMakeAndModel(makeAndModel);
+                break;
+            case "Status":
+                scenarioData.setStatus(sfValue);
+                break;
+            case "Communication Method":
+                scenarioData.setCommunicationMethod(SfCommunicationMethodEnum.fromValue(sfValue));
+                break;
+            case "Charge Equipment Cost incl. Shipping":
+                scenarioData.setChargeEquipmentCostInclShipping(
+                        SfChargeEquipmentEnum.fromValue(sfValue));
+                break;
+            case "Purchase or Rental":
+                scenarioData.setPurchaseOrRental(SfPurchaseOrRentalEnum.fromValue(sfValue));
+                break;
+            case "Clerk/Server ID Enablement":
+                scenarioData.setClerkServerIdEnablement(SfYesOrNoEnum.fromValue(sfValue));
+                break;
+            case "Clerk/Server ID Label":
+                scenarioData.setClerkServerIdLabel(SfClerkOrServerIDLabelEnum.fromValue(sfValue));
+                break;
+            case "Default Terminal Settings":
+                scenarioData.setDefaultTerminalSettings(
+                        SfDefaultTerminalSettingsEnum.fromValue(sfValue));
+                break;
+            case "Ticket Number":
+                yesOrNoEnabledDisabledPojo.setSFYesOrNoEnum(SfYesOrNoEnum.fromValue(sfValue));
+                yesOrNoEnabledDisabledPojo.setVhqEnabledOrDisabledEnum(
+                        VhqEnabledOrDisabledEnum.fromValue(vhqValue));
+                scenarioData.setTicketNumber(yesOrNoEnabledDisabledPojo);
+                break;
+            case "Terminal Auto Batch":
+                yesOrNoEnabledDisabledPojo.setSFYesOrNoEnum(SfYesOrNoEnum.fromValue(sfValue));
+                yesOrNoEnabledDisabledPojo.setVhqEnabledOrDisabledEnum(
+                        VhqEnabledOrDisabledEnum.fromValue(vhqValue));
+                scenarioData.setTerminalAutoBatch(yesOrNoEnabledDisabledPojo);
+                break;
+            case "Auto Batch Time":
+                var autoBatchTimePojo = new AutoBatchTimePojo();
+                autoBatchTimePojo.setSFAutoBatchTime(sfValue);
+                autoBatchTimePojo.setVhqAutoBatchTime(vhqValue);
+                scenarioData.setAutoBatchTime(autoBatchTimePojo);
+                break;
+            case "Table Number":
+                yesOrNoEnabledDisabledPojo.setSFYesOrNoEnum(SfYesOrNoEnum.fromValue(sfValue));
+                yesOrNoEnabledDisabledPojo.setVhqEnabledOrDisabledEnum(
+                        VhqEnabledOrDisabledEnum.fromValue(vhqValue));
+                scenarioData.setTableNumber(yesOrNoEnabledDisabledPojo);
+                break;
+            case "Cashback":
+                yesOrNoEnabledDisabledPojo.setSFYesOrNoEnum(SfYesOrNoEnum.fromValue(sfValue));
+                yesOrNoEnabledDisabledPojo.setVhqEnabledOrDisabledEnum(
+                        VhqEnabledOrDisabledEnum.fromValue(vhqValue));
+                scenarioData.setCashback(yesOrNoEnabledDisabledPojo);
+                break;
+            case "Merchant Receipt Logo":
+                yesOrNoEnabledDisabledPojo.setSFYesOrNoEnum(SfYesOrNoEnum.fromValue(sfValue));
+                yesOrNoEnabledDisabledPojo.setVhqEnabledOrDisabledEnum(
+                        VhqEnabledOrDisabledEnum.fromValue(vhqValue));
+                scenarioData.setMerchantReceiptLogo(yesOrNoEnabledDisabledPojo);
+                break;
+            case "Alphanumeric Invoice number":
+                yesOrNoEnabledDisabledPojo.setSFYesOrNoEnum(SfYesOrNoEnum.fromValue(sfValue));
+                yesOrNoEnabledDisabledPojo.setVhqEnabledOrDisabledEnum(
+                        VhqEnabledOrDisabledEnum.fromValue(vhqValue));
+                scenarioData.setAlphanumericInvoiceNumber(yesOrNoEnabledDisabledPojo);
+                break;
+            case "Terminal Type":
+                scenarioData.setTerminalType(SfTerminalTypeEnum.fromValue(sfValue));
+                break;
+            case "Tip at Time of Sale":
+                scenarioData.setTipAtTimeOfSale(SfYesOrNoEnum.fromValue(sfValue));
+                break;
+            default:
+                exceptionForUnexpectedColumn(columns.toString());
+                break;
+        }
+    }
+
+    private static void processVhqData(
+            Map<String, String> columns, ScenarioDataPojo scenarioData, String vhqField) {
+        String vhqValue = columns.get(DataTableColumnsEnum.VHQ_VALUE.getValue());
+        switch (vhqField) {
+            case "Clerk ID":
+                scenarioData.setVhqClerkID(VhqEnabledOrDisabledEnum.fromValue(vhqValue));
+                break;
+            case "Server ID":
+                scenarioData.setVhqServerID(VhqEnabledOrDisabledEnum.fromValue(vhqValue));
+                break;
+            case "Accept Tips":
+                scenarioData.setVhqAcceptTips(VhqEnabledOrDisabledEnum.fromValue(vhqValue));
+                break;
+            case "RetailPullMode":
+                scenarioData.setVhqRetailPullMode(VhqEnabledOrDisabledEnum.fromValue(vhqValue));
+                break;
+            case "RestaurantPushMode":
+                scenarioData.setVhqRestaurantPushMode(VhqEnabledOrDisabledEnum.fromValue(vhqValue));
+                break;
+            case "Semi-Integration":
+                scenarioData.setVhqSemiIntegration(VhqEnabledOrDisabledEnum.fromValue(vhqValue));
+                break;
+            default:
+                exceptionForUnexpectedColumn(columns.toString());
+                break;
+        }
     }
 
     private static void exceptionForUnexpectedColumn(String columnName) {
