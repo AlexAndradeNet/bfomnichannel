@@ -27,7 +27,7 @@ public class WaitForPageLoad implements Interaction {
     public <T extends Actor> void performAs(T actor) {
         WebDriver driver = Serenity.getDriver();
         var js = (JavascriptExecutor) driver;
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(100))
                 .until(
                         webDriver ->
                                 js.executeScript("return document.readyState").equals("complete"));

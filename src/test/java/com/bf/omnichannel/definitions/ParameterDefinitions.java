@@ -18,7 +18,7 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.actors.OnStage;
 
 public class ParameterDefinitions {
-    @ParameterType("Elizabeth|Verena|Alexander|Fred|she|he|they|him|her")
+    @ParameterType("Elizabeth|Abdul|Alex|Fred|she|he|they|him|her")
     public Actor actor(String actorName) {
         return OnStage.theActorCalled(actorName);
     }

@@ -14,25 +14,26 @@ from Nuvei Inc.
 package com.bf.omnichannel.data;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
+@Getter
 public class SecretsManager {
 
-    private final String username;
-    private final String password;
+    @Getter private static final SecretsManager instance = new SecretsManager();
+    private final String salesForceUsername;
+    private final String salesForcePassword;
+    private final String vhqUsername;
+    private final String vhqPassword;
 
     private SecretsManager() {
         Dotenv dotenv = Dotenv.configure().load();
-        username = getEnv(dotenv, "SBX_SALESFORCE_USERNAME");
-        password = getEnv(dotenv, "SBX_SALESFORCE_PASSWORD");
-    }
 
-    private static final class InstanceHolder {
-        private static final SecretsManager instance = new SecretsManager();
-    }
+        salesForceUsername = getEnv(dotenv, "SBX_SALESFORCE_USERNAME");
+        salesForcePassword = getEnv(dotenv, "SBX_SALESFORCE_PASSWORD");
 
-    public static synchronized SecretsManager getInstance() {
-        return InstanceHolder.instance;
+        vhqUsername = getEnv(dotenv, "SBX_VHQ_USERNAME");
+        vhqPassword = getEnv(dotenv, "SBX_VHQ_PASSWORD");
     }
 
     private static String getEnv(Dotenv dotenv, String key) {
@@ -46,13 +47,5 @@ public class SecretsManager {
         }
 
         return value;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 }

@@ -15,22 +15,27 @@ package com.bf.omnichannel.interactions;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
-import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplay.questions.Text;
 import net.serenitybdd.screenplay.targets.Target;
+import org.jetbrains.annotations.NotNull;
 
-public class ClickOn implements Interaction {
+public class RememberInfo implements Interaction {
+
     private final Target target;
+    private final String serenityVariableName;
 
-    public ClickOn(Target target) {
+    public RememberInfo(Target target, String serenityVariableName) {
         this.target = target;
+        this.serenityVariableName = serenityVariableName;
     }
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(Click.on(target));
+        actor.remember(serenityVariableName, Text.of(target).answeredBy(actor));
     }
 
-    public static ClickOn target(Target target) {
-        return new ClickOn(target);
+    public static RememberInfo forTarget(
+            @NotNull Actor theActor, Target target, String serenityVariableName) {
+        return new RememberInfo(target, serenityVariableName);
     }
 }

@@ -6,6 +6,7 @@ plugins {
     id 'net.serenity-bdd.serenity-gradle-plugin' version '4.1.10'
     id 'com.diffplug.spotless' version '6.25.0'
     id 'org.gradle.test-retry' version '1.5.9'
+    id 'name.remal.lombok' version '2.2.5'
 }
 
 //defaultTasks 'clean', 'test', 'aggregate'
@@ -22,34 +23,45 @@ java {
 
 ext {
     versions = [
-            serenityCore : '4.1.10',
-            cucumber     : '7.17.0',
-            junit        : '5.10.2',
-            junitPlatform: '1.10.2',
             aeonbits     : '1.0.12',
+            assertj      : '3.25.3',
+            cucumber     : '7.17.0',
             gson         : '2.10.1',
+            junit        : '5.11.0-M1',
+            junitPlatform: '1.11.0-M1',
+            lombok       : '1.18.32',
+            serenityCore : '4.1.12',
             slf4j        : '2.0.13'
     ]
+}
+
+configurations {
+    configureEach {
+        exclude group: 'org.junit', module: 'junit'
+    }
 }
 
 dependencies {
     implementation "org.aeonbits.owner:owner:${versions.aeonbits}",
             'org.apache.commons:commons-lang3:3.14.0',
-            'io.github.cdimascio:dotenv-java:3.0.0'
+            'io.github.cdimascio:dotenv-java:3.0.0',
+            "org.slf4j:slf4j-simple:${versions.slf4j}"
     testImplementation "org.slf4j:slf4j-api:${versions.slf4j}",
-            "org.slf4j:slf4j-simple:${versions.slf4j}",
             "com.google.code.gson:gson:${versions.gson}",
             "net.serenity-bdd:serenity-core:${versions.serenityCore}",
             "net.serenity-bdd:serenity-ensure:${versions.serenityCore}",
             "net.serenity-bdd:serenity-screenplay:${versions.serenityCore}",
             "net.serenity-bdd:serenity-screenplay-webdriver:${versions.serenityCore}",
             "net.serenity-bdd:serenity-cucumber:${versions.serenityCore}",
+            "net.serenity-bdd:serenity-junit:${versions.serenityCore}",
             "org.junit.jupiter:junit-jupiter-api:${versions.junit}",
             "org.junit.platform:junit-platform-suite:${versions.junitPlatform}",
+            "org.junit.platform:junit-platform-launcher:${versions.junitPlatform}",
             "io.cucumber:cucumber-java:${versions.cucumber}",
-            "io.cucumber:cucumber-junit-platform-engine:${versions.cucumber}"
-
+            "io.cucumber:cucumber-junit-platform-engine:${versions.cucumber}",
+            "org.assertj:assertj-core:${versions.assertj}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${versions.junit}"
+    compileOnly "org.projectlombok:lombok:${versions.lombok}"
 }
 
 serenity {

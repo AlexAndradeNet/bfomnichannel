@@ -13,24 +13,20 @@ from Nuvei Inc.
 */
 package com.bf.omnichannel.interactions;
 
+import net.serenitybdd.core.Serenity;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
-import net.serenitybdd.screenplay.actions.Click;
-import net.serenitybdd.screenplay.targets.Target;
+import org.openqa.selenium.JavascriptExecutor;
 
-public class ClickOn implements Interaction {
-    private final Target target;
-
-    public ClickOn(Target target) {
-        this.target = target;
-    }
+public class ScrollToBottom implements Interaction {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(Click.on(target));
+        JavascriptExecutor js = (JavascriptExecutor) Serenity.getDriver();
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
     }
 
-    public static ClickOn target(Target target) {
-        return new ClickOn(target);
+    public static ScrollToBottom ofPage() {
+        return new ScrollToBottom();
     }
 }
